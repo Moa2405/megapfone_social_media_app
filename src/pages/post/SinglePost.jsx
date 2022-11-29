@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
