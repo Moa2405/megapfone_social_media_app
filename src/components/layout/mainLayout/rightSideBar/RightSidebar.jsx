@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import SearchBar from "../../../searchBar/SearchBar";
 import PeopleYouFollow from "../../../peopleYouFollow/PeopleYouFollow";
 

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTheme } from "@emotion/react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -38,11 +38,6 @@ const EditPost = ({ post, closeMenu }) => {
 
   // state for the modal
   const [openModal, setOpenModal] = useState(false);
-
-  const [success, setSuccess] = useState(null);
-
-  //create post btn disabled state
-  const [disabledBtn, setDisabledBtn] = useState(true);
 
   const { activateSnackBar } = useSnackBar();
 
@@ -94,6 +89,8 @@ const EditPost = ({ post, closeMenu }) => {
       closeMenu();
       activateSnackBar("Post updated successfully", "success");
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response])
 
   //onClick event to remove tag from the state

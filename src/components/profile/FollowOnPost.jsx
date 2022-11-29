@@ -1,4 +1,4 @@
-import { CircularProgress, ListItemIcon, MenuItem, Stack, Typography } from "@mui/material";
+import { CircularProgress, ListItemIcon, MenuItem, Stack, Typography } from "@mui/material"
 import { useAxiosHook } from "../../hooks/useAxiosHook";
 import { useAuth } from "../../context/authContext";
 import ErrorIcon from '@mui/icons-material/Error';
@@ -12,12 +12,23 @@ const Follow = ({ post, setFollows, closeMenu }) => {
   const { response, error, loading, fetchData } = useAxiosHook();
   const { activateSnackBar } = useSnackBar();
 
+  const handleFollow = () => {
+
+    fetchData({
+      method: "PUT",
+      url: url.profiles.follow(post.author.name),
+    });
+  };
+
   useEffect(() => {
     let mounted = true;
+
     if (mounted && response.name) {
-      //update the user object in context
+
+      //updating the user object in context
       const updatedUser = { ...user, following: [...user.following, { name: post.author.name, avatar: post.author.avatar }] };
       updateUser(updatedUser);
+
       //this is a function that updates the state of the parent component
       setFollows("following");
       closeMenu();
@@ -28,14 +39,9 @@ const Follow = ({ post, setFollows, closeMenu }) => {
     }
 
     return () => mounted = false;
-  }, [response]);
 
-  const handleFollow = () => {
-    fetchData({
-      method: "PUT",
-      url: url.profiles.follow(post.author.name),
-    });
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response]);
 
   return (
     <MenuItem onClick={handleFollow}>

@@ -20,6 +20,8 @@ export function ThemeContextProvider({ children }) {
     else {
       setDarkMode(prefersDarkMode);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefersDarkMode]);
 
 
@@ -38,6 +40,8 @@ export function ThemeContextProvider({ children }) {
       darkMode,
       handleMode,
     }),
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [darkMode]
   );
 

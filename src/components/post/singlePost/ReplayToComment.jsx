@@ -1,15 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, InputAdornment, TextField } from "@mui/material";
-import { useTheme } from '@mui/system';
-import { useAxiosHook } from "../../../hooks/useAxiosHook";
+import { useAxiosHook } from "../../../hooks/useAxiosHook"
 import url from "../../../common/url";
 import { LoadingButton } from "@mui/lab";
 
 const ReplyToComment = ({ postId, commentId }) => {
 
-  const theme = useTheme();
   const commentRef = useRef();
-  const [errorMessage, setErrorMessage] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const { response, loading, error, fetchData } = useAxiosHook();
 

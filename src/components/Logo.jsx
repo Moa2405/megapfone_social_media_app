@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/system";
+import { useTheme } from "@mui/system"
 
 const Logo = () => {
 

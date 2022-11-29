@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom/client'
 import App from './App';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeContextProvider, useThemeMode } from './context/themeContext';
@@ -23,13 +23,13 @@ const Root = () => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <ThemeContextProvider>
-        <Root />
-      </ThemeContextProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <BrowserRouter>
+    <ThemeContextProvider>
+      <Root />
+    </ThemeContextProvider>
+  </BrowserRouter>
+  // </React.StrictMode>
 );
 
 

@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
 import url from "../../common/url";
@@ -32,11 +32,12 @@ const SinglePost = () => {
     }
 
     return () => {
-      console.log("single post Unmounted");
       mounted = false;
       clearInterval(fetchData);
       cancel();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {

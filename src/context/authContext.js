@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import useLocalStorage from "../hooks/useLocaleStorage";
+import useLocalStorage from "../hooks/useLocaleStorage"
 
 const AuthContext = createContext();
 
@@ -34,6 +34,8 @@ export const AuthProvider = ({ children }) => {
             login,
             logout
         }),
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [user]
     );
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

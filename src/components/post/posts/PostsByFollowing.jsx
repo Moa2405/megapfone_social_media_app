@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import { useAuth } from "../../../context/authContext";
-import { useEffect, useState } from "react";
-import { useAxiosHook } from "../../../hooks/useAxiosHook";
+import { useEffect } from "react";
+import { useAxiosHook } from "../../../hooks/useAxiosHook"
 import url from "../../../common/url";
 import PostSkeleton from "./PostsSkeletons";
 import Posts from "./Posts";
@@ -15,16 +14,19 @@ const PostsByFollowing = () => {
     let mounted = true;
     console.log("post following mounted");
 
-    fetchData({
-      method: "GET",
-      url: url.posts.getPostsByFollowing
-    });
+    if (mounted) {
+      fetchData({
+        method: "GET",
+        url: url.posts.getPostsByFollowing
+      });
+    }
 
     return () => {
       mounted = false;
-      clearInterval(fetchData);
-      // cancel();
+      cancel();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {

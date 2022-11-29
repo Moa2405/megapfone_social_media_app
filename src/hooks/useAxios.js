@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/authContext"
 
 const useAxios = () => {
 

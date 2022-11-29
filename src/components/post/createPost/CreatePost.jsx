@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTheme } from "@emotion/react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form"
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAxiosHook } from "../../../hooks/useAxiosHook";
@@ -8,7 +8,6 @@ import { usePostsContext } from "../../../context/postContext";
 import url from "../../../common/url";
 import { useSnackBar } from "../../../context/snackBarContext";
 import {
-  Box,
   Modal,
   Button,
   Chip,
@@ -25,7 +24,6 @@ import { LoadingButton } from "@mui/lab";
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import StyleOutlinedIcon from '@mui/icons-material/StyleOutlined';
 import AddIcon from '@mui/icons-material/Add';
-import { el } from "date-fns/locale";
 import ErrorAlert from "../../alert/ErrorAlert";
 
 const schema = yup.object().shape({
@@ -107,14 +105,15 @@ const CreatePost = () => {
 
     if (mounted) {
       if (typeof response === 'object' &&
-        response !== null &&
-        !Array.isArray(response)) {
+        response !== null && !Array.isArray(response)) {
+
         addPost(response);
         activateSnackBar("Post created successfully", "success");
         reset();
         setOpenModal(false);
-        console.log(response);
+
       } else if (typeof response === 'string') {
+
         activateSnackBar("Something went wrong", "error");
       }
     }
@@ -122,7 +121,7 @@ const CreatePost = () => {
     return () => {
       mounted = false;
     };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   //onClick event to remove tag from the state
@@ -143,7 +142,6 @@ const CreatePost = () => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
     borderRadius: "10px",
     border: "2px solid",
     borderColor: theme.palette.mode === "dark" ? theme.palette.grey[800] : theme.palette.grey[500],

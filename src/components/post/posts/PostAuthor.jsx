@@ -2,7 +2,6 @@ import { Avatar, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/system";
 import { formatDistance } from "../../../utils/formatData";
-import PostOptionBtn from "./PostOptionsBtn";
 import { stringAvatar } from "../../../utils/avatarPlaceHolder";
 
 const PostAuthor = ({ author, created }) => {

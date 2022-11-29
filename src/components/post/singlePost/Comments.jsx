@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { TransitionGroup } from "react-transition-group";
-import ReplyIcon from '@mui/icons-material/Reply';
 import ReplyToComment from "./ReplayToComment";
 import { formatDistance } from "../../../utils/formatData";
 import { useTheme } from '@mui/system';
@@ -10,15 +8,16 @@ import { Box, Collapse, Divider, Paper, Typography, Stack } from "@mui/material"
 const Comments = ({ comments }) => {
 
   const theme = useTheme();
-  const [anchorEl, setAnchorEl] = useState(null);
-
   const replyDividerColor = theme.palette.mode === "dark" ? "#FFFFFF" : "#000000";
 
+  //making a new array of comments, adding an array of replies to each comment
   const commentsWithReply = comments.filter(comment => comment.replyToId === null);
   const replies = comments.filter(comment => comment.replyToId !== null);
   commentsWithReply.forEach(comment => {
     comment.replies = replies.filter(reply => reply.replyToId === comment.id);
   });
+
+  console.log(commentsWithReply);
 
   if (comments.length === 0) {
     return (

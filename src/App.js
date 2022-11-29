@@ -2,8 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from "./context/authContext";
 import Layout from './components/layout/mainLayout/MainLayout';
 import Home from './pages/home/Home';
-import MyProfile from "./pages/profile/MyProfile"
-import UsersProfile from "./pages/profile/UsersProfile"
+import MyProfile from "./pages/profile/MyProfile";
+import UsersProfile from "./pages/profile/UsersProfile";
 import User from './pages/profile/User';
 import SignIn from './pages/signIn/SignIn';
 import Register from './pages/register/Register';

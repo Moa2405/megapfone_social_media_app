@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTheme } from "@mui/system";
-import { useAuth } from '../../../context/authContext';
+import { useAuth } from '../../../context/authContext'
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MoreHoriz from '@mui/icons-material/MoreHoriz';
@@ -11,9 +11,9 @@ import DeletePost from '../deletePost/DeletePost';
 
 const ITEM_HEIGHT = 48;
 
-const PostOptionBtn = ({ post, handleState }) => {
+const PostOptionBtn = ({ post }) => {
 
-  const { user, updateUser } = useAuth();
+  const { user } = useAuth();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);

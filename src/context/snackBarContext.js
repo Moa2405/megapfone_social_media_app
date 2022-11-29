@@ -35,6 +35,8 @@ export const SnackBarProvider = ({ children }) => {
       activateSnackBar,
       onClose,
     }),
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [snackBar]
   );
 

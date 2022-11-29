@@ -1,12 +1,13 @@
-import { TextField, InputAdornment, Modal, Paper, IconButton, Typography, Stack, Button, Box, Avatar, Hidden } from "@mui/material";
+import { TextField, InputAdornment, Modal, Paper, IconButton, Typography, Stack, Button, Box, Avatar, CircularProgress, Hidden } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
-import { useTheme } from "@mui/system"
+import { useTheme } from "@mui/system";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
 import url from "../../common/url";
 import { useEffect, useState, useRef } from "react";
 import { stringAvatar } from "../../utils/avatarPlaceHolder";
 import { Link } from "react-router-dom";
+import ErrorAlert from "../alert/ErrorAlert";
 
 const SearchBar = () => {
 
@@ -17,8 +18,10 @@ const SearchBar = () => {
 
   const handleOpenSearchModal = () => {
     setOpenModal(true);
+
     if (!response.length > 0) {
       console.log(response);
+
       fetchData({
         method: "get",
         url: url.profiles.profiles
@@ -34,13 +37,14 @@ const SearchBar = () => {
   useEffect(() => {
     let isMounted = true;
 
-    if (isMounted && response.length > 0) {
-      console.log(response);
-    }
+    if (isMounted && response.length > 0)
+      setSearchResults(response);
 
     return () => {
       isMounted = false;
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   const theme = useTheme();
@@ -53,7 +57,6 @@ const SearchBar = () => {
     top: "10%",
     left: '50%',
     transform: 'translate(-50%, 0%)',
-    width: 400,
     borderRadius: "10px",
     border: "2px solid",
     borderColor: theme.palette.mode === "dark" ? theme.palette.grey[800] : theme.palette.grey[500],
@@ -94,7 +97,9 @@ const SearchBar = () => {
         aria-describedby="Search"
       >
         <Paper elevation={1} sx={style}>
-          <Stack spacing={2}>
+          {error && <ErrorAlert />}
+          {loading && <CircularProgress />}
+          {response.length > 0 && <Stack spacing={2}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" width="100%">
               <IconButton fontSize="large" onClick={handleCloseSearchModal}>
                 <CloseIcon />
@@ -143,7 +148,7 @@ const SearchBar = () => {
                 )}
               </Stack>
             </Stack>
-          </Stack>
+          </Stack>}
         </Paper>
       </Modal>
     </>

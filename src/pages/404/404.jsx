@@ -1,9 +1,9 @@
 import { Typography, Stack, IconButton } from "@mui/material";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import Logo from "../../components/Logo";
-import { useTheme } from "@mui/system";
+import { useTheme } from "@mui/system"
 
 const FourOFour = () => {
 

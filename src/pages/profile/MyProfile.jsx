@@ -9,7 +9,7 @@ import ProfileMedia from "../../components/profile/ProfileMedia";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
 import ErrorAlert from "../../components/alert/ErrorAlert";
 import PostSkeleton from "../../components/post/posts/PostsSkeletons";
-import { usePostsContext } from "../../context/postContext";
+import { usePostsContext } from "../../context/postContext"
 
 const MeProfile = () => {
 
@@ -38,6 +38,8 @@ const MeProfile = () => {
       clearInterval(fetchData);
       cancel();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -48,6 +50,8 @@ const MeProfile = () => {
     }
 
     return () => mounted = false;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   const mutedTextColor = theme.palette.mode === "dark" ? theme.palette.grey[500] : theme.palette.grey[600]

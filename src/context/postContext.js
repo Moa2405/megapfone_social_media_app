@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react"
 
 const PostsContext = createContext();
 
@@ -30,6 +30,8 @@ export const PostsProvider = ({ children }) => {
       updatePost,
       addPost,
     }),
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [postsInContext]
   );
 

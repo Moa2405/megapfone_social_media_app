@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useAuth } from '../../context/authContext'
 import url from "../../common/url";
 import { Alert, Box, Divider, Stack, TextField, Typography } from "@mui/material";
@@ -61,6 +61,8 @@ const SignIn = () => {
     return () => {
       isMounted = false;
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   return (

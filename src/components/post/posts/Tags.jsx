@@ -1,5 +1,4 @@
-import { Chip } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Stack } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { Link } from "react-router-dom";
 

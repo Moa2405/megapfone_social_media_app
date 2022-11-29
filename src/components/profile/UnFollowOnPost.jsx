@@ -1,11 +1,10 @@
-import { CircularProgress, ListItemIcon, MenuItem, Stack, Typography } from "@mui/material";
+import { CircularProgress, ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
 import { useAuth } from "../../context/authContext";
 import ErrorIcon from '@mui/icons-material/Error';
 import url from "../../common/url";
 import { useEffect } from "react";
 import { useSnackBar } from "../../context/snackBarContext";
-
 
 const UnFollow = ({ post, setFollows, closeMenu }) => {
 
@@ -29,6 +28,8 @@ const UnFollow = ({ post, setFollows, closeMenu }) => {
     }
 
     return () => mounted = false;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   const handleUnFollow = async () => {

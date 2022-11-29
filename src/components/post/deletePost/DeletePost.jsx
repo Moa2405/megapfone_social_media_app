@@ -31,6 +31,8 @@ const DeletePost = ({ post, closeMenu }) => {
       }
     }
     return () => mounted = false;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   return (

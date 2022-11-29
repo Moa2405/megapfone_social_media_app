@@ -1,16 +1,12 @@
-import { Avatar, Box } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTheme } from "@mui/system";
 import { stringAvatar } from "../../utils/avatarPlaceHolder";
-import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 
 const ProfileMedia = ({ media, name }) => {
 
-  //regex to check if the media.avatar is a url or not
-  const regex = /^(http|https):\/\/[^ "]+$/;
-
   const [banner, setBanner] = useState();
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState()
 
   const theme = useTheme();
 
@@ -26,7 +22,6 @@ const ProfileMedia = ({ media, name }) => {
 
     if (media.avatar) {
       const isImage = media.avatar.match(/^(http|https):\/\/[^ "]+$/);
-      // const isImage = media.avatar.match(/\.(jpeg|jpg|gif|png)$/);
       if (isImage) {
         setAvatar(true);
       } else {
@@ -42,14 +37,11 @@ const ProfileMedia = ({ media, name }) => {
       checkIfMediaIsImage(media);
     }
 
-    return () => {
-      mounted = false
-      clearInterval(checkIfMediaIsImage);
-    };
+    return () => mounted = false
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [media]);
 
-  const backgroundColor = theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.23)" : theme.palette.grey[200];
   const avatarBorder = theme.palette.mode === "dark" ? "2px solid #000000" : "2px solid #FFFFFF";
 
   return (

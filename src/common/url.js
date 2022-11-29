@@ -16,10 +16,9 @@ const url = {
     editPost: (id) => `/api/v1/social/posts/${id}?_author=true&_comments=true&_reactions=true`,
   },
   profiles: {
-    profiles: "/api/v1/social/profiles?limit=200",
+    profiles: "/api/v1/social/profiles?limit=100",
     profile: (name) => `/api/v1/social/profiles/${name}`,
     UpdateProfileMedia: (name) => `/api/v1/social/profiles/${name}/media`,
-    getFollowers: (name) => `/api/v1/social/profiles/${name}?_followers=true`,
     getFollowing: (name) => `/api/v1/social/profiles/${name}?_following=true`,
     getFollowers: (name) => `/api/v1/social/profiles/${name}?_following=true`,
     getFollowersAndFollowing: (name) => `/api/v1/social/profiles/${name}?_following=true&_followers=true`,

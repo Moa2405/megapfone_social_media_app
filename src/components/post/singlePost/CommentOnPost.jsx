@@ -1,23 +1,18 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Box, InputAdornment, TextField } from "@mui/material";
-import { useTheme } from '@mui/system';
-import useAxios from "../../../hooks/useAxios";
 import url from "../../../common/url";
 import { LoadingButton } from "@mui/lab";
+import { useAxiosHook } from "../../../hooks/useAxiosHook";
+import { useSnackBar } from "../../../context/snackBarContext";
 
 const CommentOnPost = ({ postId }) => {
 
-  const theme = useTheme();
+  const { activateSnackBar } = useSnackBar();
+  const { response, loading, error, fetchData } = useAxiosHook();
   const commentRef = useRef();
-  const [error, setError] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
   const [disabled, setDisabled] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const axios = useAxios();
 
   const handleOnChange = (e) => {
-    setError(null);
-    setErrorMessage(null);
     e.target.value.length > 0 ? setDisabled(false) : setDisabled(true);
   }
 
@@ -25,22 +20,27 @@ const CommentOnPost = ({ postId }) => {
     const options = {
       body: commentRef.current.value
     }
-    try {
-      setLoading(true);
-      const res = await axios.post(url.posts.comment(postId), options);
-      if (res.status === 200) {
-        commentRef.current.value = "";
-      }
-      console.log(res);
-    }
-    catch (error) {
-      console.log(error);
-      setError(`${error.response.data.errors[0].message}`);
-    }
-    finally {
-      setLoading(false);
-    }
+
+    fetchData({
+      method: "post",
+      url: url.posts.comment(postId),
+      data: options
+    })
   }
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted && response.created) {
+      commentRef.current.value = "";
+      setDisabled(true);
+      activateSnackBar("Comment added successfully", "success");
+    }
+
+    return () => mounted = false;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response])
 
   return (
     <Box sx={{ width: "100%" }}>

@@ -1,7 +1,7 @@
 import Posts from "../post/posts/Posts";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
 import url from "../../common/url";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PostSkeleton from "../post/posts/PostsSkeletons";
 import ErrorAlert from "../alert/ErrorAlert";
 import { Typography } from "@mui/material";
@@ -23,23 +23,23 @@ const UsersProfilePosts = ({ name }) => {
 
     return () => {
       mounted = false;
-      clearInterval(fetchData);
-
-      // cancel();
+      cancel();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
-  useEffect(() => {
-    let mounted = true;
+  // useEffect(() => {
+  //   let mounted = true;
 
-    if (mounted) {
-      console.log("response", response);
-    }
+  //   if (mounted) {
+  //     console.log("response", response);
+  //   }
 
-    return () => {
-      mounted = false;
-    }
-  }, [response]);
+  //   return () => {
+  //     mounted = false;
+  //   }
+  // }, [response]);
 
   if (loading) {
     return <PostSkeleton />

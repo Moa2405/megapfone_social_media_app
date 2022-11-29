@@ -26,6 +26,8 @@ const FollowOnProfilePage = () => {
     }
 
     return () => mounted = false;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   const handleFollow = () => {

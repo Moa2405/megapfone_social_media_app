@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Box, Stack, Typography } from "@mui/material";
-import { useAuth } from "../../context/authContext";
+import { Box, CircularProgress, Stack, Typography } from "@mui/material";
+// import { useAuth } from "../../context/authContext";
 import { useParams } from 'react-router-dom';
 import url from "../../common/url";
 import ProfileMedia from "../../components/profile/ProfileMedia";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
 import UsersProfilePosts from "../../components/profile/UsersProfilesPosts";
+import ErrorAlert from "../../components/alert/ErrorAlert";
 
 const UsersProfile = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { name } = useParams();
   const { response, error, loading, cancel, fetchData } = useAxiosHook();
   console.log(name);
@@ -17,9 +18,9 @@ const UsersProfile = () => {
   const [profileMedia, setProfileMedia] = useState([]);
   const [nameOfUser, setNameOfUser] = useState(name);
 
-  const handleFollow = () => {
-    console.log(user.following);
-  }
+  // const handleFollow = () => {
+  //   console.log(user.following);
+  // }
 
   useEffect(() => {
     let mounted = true;
@@ -34,9 +35,10 @@ const UsersProfile = () => {
 
     return () => {
       mounted = false;
-      clearInterval(fetchData);
-      // cancel();
+      cancel();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
   useEffect(() => {
@@ -54,10 +56,14 @@ const UsersProfile = () => {
     return () => {
       mounted = false;
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   return (
     <>
+      {error && <ErrorAlert />}
+      {loading && <CircularProgress />}
       {userProfile.name === name && (
         <div>
           <ProfileMedia name={userProfile.name} media={profileMedia} />

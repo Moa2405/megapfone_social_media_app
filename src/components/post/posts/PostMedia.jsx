@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import { LazyLoadImage } from "react-lazy-load-image-component"
 
 
 const PostMedia = ({ media }) => {

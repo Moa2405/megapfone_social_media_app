@@ -1,7 +1,7 @@
 import EmojiPicker from 'emoji-picker-react';
 import { useState } from 'react';
 import { Chip, Grid, IconButton, Popper, Stack } from "@mui/material";
-import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
+import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined'
 import useAxios from '../../../hooks/useAxios';
 import url from '../../../common/url';
 import { useTheme } from '@mui/system';

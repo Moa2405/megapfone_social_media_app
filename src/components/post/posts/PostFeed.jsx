@@ -8,7 +8,6 @@ import PostSkeleton from "./PostsSkeletons";
 const PostFeed = () => {
 
   const { response, error, loading, cancel, fetchData } = useAxiosHook();
-
   const apiUrl = url.posts.allPostsLimitFifty;
 
   useEffect(() => {
@@ -25,9 +24,10 @@ const PostFeed = () => {
     return () => {
       console.log("post feed unmounted");
       mounted = false;
-      clearInterval(fetchData);
-      // cancel();
+      cancel();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {

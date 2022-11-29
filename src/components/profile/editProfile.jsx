@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import url from "../../common/url";
-import { useAxiosHook } from "../../hooks/useAxiosHook";
+import { useAxiosHook } from "../../hooks/useAxiosHook"
 import { useAuth } from "../../context/authContext";
 import { useTheme } from "@emotion/react";
 import { Controller, useForm } from "react-hook-form";
@@ -40,7 +40,7 @@ const EditProfile = ({ setProfileImages }) => {
   const [previewAvatarImg, setPreviewAvatarImg] = useState(user.avatar);
   const [disabledPreviewBannerBtn, setDisabledPreviewBannerBtn] = useState(false);
   const [disabledPreviewAvatarBtn, setDisabledPreviewAvatarBtn] = useState(false);
-  const { response, error, loading, cancel, fetchData } = useAxiosHook();
+  const { response, error, loading, fetchData } = useAxiosHook();
 
   const { control, handleSubmit, reset, watch, trigger, formState: { errors } } = useForm({
     defaultValues: {
@@ -84,12 +84,11 @@ const EditProfile = ({ setProfileImages }) => {
     let mounted = true;
 
     if (mounted && response.name) {
-      const newUserObject = { ...user }
-      console.log(newUserObject);
+      const newUserObject = { ...user };
       newUserObject.banner = response.banner;
       newUserObject.avatar = response.avatar;
+
       updateUser(newUserObject);
-      console.log(user);
       setProfileImages({ banner: response.banner, avatar: response.avatar });
       reset()
       handleCloseEditProfileModal();
@@ -97,6 +96,8 @@ const EditProfile = ({ setProfileImages }) => {
     }
 
     return () => mounted = false;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   const handleOpenEditProfileModal = () => setOpenModal(true);
