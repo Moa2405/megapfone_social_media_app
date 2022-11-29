@@ -35,7 +35,7 @@ const SinglePost = () => {
       console.log("single post Unmounted");
       mounted = false;
       clearInterval(fetchData);
-      // cancel();
+      cancel();
     }
   }, []);
 
