@@ -114,8 +114,8 @@ const SearchBar = () => {
             <Stack
               direction="column"
               spacing={3}
-              component="form"
-              noValidate
+              // component="form"
+              // noValidate
               sx={{ margin: "0px" }}
               autoComplete="off"
             >
