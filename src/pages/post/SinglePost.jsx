@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
@@ -50,16 +50,20 @@ const SinglePost = () => {
 
   if (response.title) {
     return (
-      <Stack width="100%" spacing={1}>
-        <PostAuthor author={response.author} created={response.created} />
-        <Typography color="primary" variant="h4" component="h1">{response.title}</Typography>
-        <Tags tags={response.tags} />
-        <Typography variant="body1">{response.body}</Typography>
+      <>
+        <Stack width="100%" px={2} spacing={1}>
+          <PostAuthor author={response.author} created={response.created} />
+          <Typography color="primary" variant="h4" component="h1">{response.title}</Typography>
+          <Tags tags={response.tags} />
+          <Typography variant="body1">{response.body}</Typography>
+        </Stack>
         <PostMedia media={response.media} />
-        <ReactToPost postId={response.id} reactions={response.reactions} />
-        <CommentOnPost postId={response.id} />
-        <Comments comments={response.comments} />
-      </Stack>
+        <Stack width="100%" px={2} spacing={1}>
+          <ReactToPost postId={response.id} reactions={response.reactions} />
+          <CommentOnPost postId={response.id} />
+          <Comments comments={response.comments} />
+        </Stack>
+      </>
     );
   }
 }
