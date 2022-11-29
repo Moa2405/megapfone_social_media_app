@@ -4,7 +4,7 @@ import url from "../../common/url";
 import { useEffect } from "react";
 import PostSkeleton from "../post/posts/PostsSkeletons";
 import ErrorAlert from "../alert/ErrorAlert";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const UsersProfilePosts = ({ name }) => {
 
@@ -50,7 +50,11 @@ const UsersProfilePosts = ({ name }) => {
   }
 
   if (response.length === 0) {
-    return <Typography>This user has no posts yet</Typography>
+    return (
+      <Box sx={{ px: 2 }}>
+        <Typography>This user has no posts yet</Typography>
+      </Box>
+    )
   }
 
   return (

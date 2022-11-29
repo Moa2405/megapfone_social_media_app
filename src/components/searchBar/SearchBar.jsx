@@ -156,3 +156,7 @@ const SearchBar = () => {
 }
 
 export default SearchBar;
+
+//q: git push -u origin master
+
+
