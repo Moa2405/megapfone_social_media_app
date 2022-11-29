@@ -16,53 +16,51 @@ import Comments from "../../components/post/singlePost/Comments";
 const SinglePost = () => {
 
   const { loading, response, error, cancel, fetchData } = useAxiosHook();
-  const [post, setPost] = useState(null);
   const { id } = useParams();
-  console.log(post);
-
-  useEffect(() => {
-    fetchData({
-      method: "GET",
-      url: url.posts.getPost(id),
-    });
-
-    return () => {
-      clearInterval(fetchData);
-      cancel();
-    }
-  }, []);
+  console.log(response);
 
   useEffect(() => {
     let mounted = true;
+    console.log("single post mounted");
 
-    if (mounted && response.created) {
+    if (mounted) {
 
-      setPost(response);
+      fetchData({
+        method: "GET",
+        url: url.posts.getPost(id),
+      });
     }
 
     return () => {
+      console.log("single post Unmounted");
       mounted = false;
+      clearInterval(fetchData);
+      // cancel();
     }
-  }, [response]);
+  }, []);
 
-  return (
-    <>
-      {loading && <PostSkeleton />}
-      {error && <ErrorAlert />}
-      {post && (
-        <Stack width="100%" spacing={1}>
-          <PostAuthor author={post.author} created={post.created} />
-          <Typography color="primary" variant="h4" component="h1">{post.title}</Typography>
-          <Tags tags={post.tags} />
-          <Typography noWrap={true} variant="body1" component="p">{post.body}</Typography>
-          <PostMedia media={post.media} />
-          <ReactToPost postId={post.id} reactions={post.reactions} />
-          <CommentOnPost postId={post.id} />
-          <Comments comments={post.comments} />
-        </Stack>
-      )}
-    </>
-  );
+  if (loading) {
+    return <PostSkeleton />
+  }
+
+  if (error) {
+    return <ErrorAlert />
+  }
+
+  if (response.title) {
+    return (
+      <Stack width="100%" spacing={1}>
+        <PostAuthor author={response.author} created={response.created} />
+        <Typography color="primary" variant="h4" component="h1">{response.title}</Typography>
+        <Tags tags={response.tags} />
+        <Typography variant="body1">{response.body}</Typography>
+        <PostMedia media={response.media} />
+        <ReactToPost postId={response.id} reactions={response.reactions} />
+        <CommentOnPost postId={response.id} />
+        <Comments comments={response.comments} />
+      </Stack>
+    );
+  }
 }
 
 export default SinglePost;

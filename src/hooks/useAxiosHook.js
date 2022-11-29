@@ -36,6 +36,7 @@ export const useAxiosHook = (axiosParams) => {
       }
     }
     catch (error) {
+      console.log(error);
       setError(error.response.data.errors);
       console.error(error.response.data.errors);
     }

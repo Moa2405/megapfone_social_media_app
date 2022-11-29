@@ -5,12 +5,10 @@ import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
 import useAxios from '../../../hooks/useAxios';
 import url from '../../../common/url';
 import { useTheme } from '@mui/system';
-import { BorderColor } from '@mui/icons-material';
 
 const ReactToPost = ({ postId, reactions }) => {
 
   const theme = useTheme()
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [reactionsArray, setReactionsArray] = useState(reactions);
   const axios = useAxios();
@@ -63,7 +61,7 @@ const ReactToPost = ({ postId, reactions }) => {
   return (
     <>
       <Popper sx={{ zIndex: "1000" }} id={id} open={open} anchorEl={anchorEl} placement="top-start">
-        <EmojiPicker lazyLoadEmojis={true} onEmojiClick={handleSelectedEmoji} theme="dark" />
+        <EmojiPicker width={250} lazyLoadEmojis={true} onEmojiClick={handleSelectedEmoji} theme="dark" />
       </Popper>
       <Stack direction="row" alignItems="center" spacing={2} px={2} py={1}>
         <IconButton aria-label="React with emoji" onClick={handleClick}>

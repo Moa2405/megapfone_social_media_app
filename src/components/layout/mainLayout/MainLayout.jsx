@@ -23,37 +23,22 @@ const Layout = () => {
           widows: "100%",
           minHeight: "100vh",
           maxWidth: theme.breakpoints.values.lg,
-          margin: "0 auto",
-          padding: "0 17px",
+          margin: "2rem auto",
+          // padding: "0 17px",
+          position: "relative",
         }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={3}
-            sx={{
-              display: {
-                xxs: "none",
-                xs: "block"
-              },
-            }}
-          >
+          <Grid item xs={2} md={3} sx={{ display: { xxs: "none", xs: "block" } }}>
             <LeftSidebar />
           </Grid>
-          <Grid item xxs={12} xs={9} sm={7} md={6}
-            sx={{
-              maxWidth: "600px",
-            }}
-          >
-            <Box
-              sx={{
-                height: "100vh",
-              }}
-              component="main"
-            >
+          <Grid item xxs={12} xs={10} sm={8} md={6}>
+            {/* main content */}
+            <Box sx={{ px: { xxs: "0", xs: "17px" } }} component="main">
               <Outlet />
             </Box>
           </Grid>
-          <Grid item md={3}
-          >
+          <Grid item md={3}>
             <RightSidebar />
           </Grid>
         </Grid>

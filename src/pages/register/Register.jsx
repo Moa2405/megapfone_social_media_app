@@ -38,13 +38,13 @@ const Register = () => {
     let isMounted = true;
 
     if (isMounted && response.name) {
-      console.log(response);
-      redirect("/signin");
+      redirect("/signIn");
     }
+
     return () => {
       isMounted = false;
     }
-  }, [response]);
+  }, [response, redirect]);
 
   const errContrastText = theme.palette.mode === "dark" ? theme.palette.error.contrastText : theme.palette.error.main;
 

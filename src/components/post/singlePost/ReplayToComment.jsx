@@ -42,16 +42,9 @@ const ReplyToComment = ({ postId, commentId }) => {
     }
   }, [response])
 
-
   return (
-    <Box
-      sx={{
-        width: "100%",
-        mt: 2
-      }}
-    >
-      <Box
-      >
+    <Box sx={{ width: "100%", mt: 2 }}>
+      <Box>
         <TextField
           id="input-with-icon-textfield"
           label="Reply..."

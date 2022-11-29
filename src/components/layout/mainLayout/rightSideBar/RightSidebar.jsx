@@ -1,30 +1,15 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
-import SearchBar from "./SearchBar";
-import PeopleToFollow from "./PeopleToFollow";
+import { Box, Grid, Stack } from "@mui/material";
+import SearchBar from "../../../searchBar/SearchBar";
+import PeopleYouFollow from "../../../peopleYouFollow/PeopleYouFollow";
 
 const RightSidebar = () => {
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        top: "0",
-        paddingTop: "1rem",
-        display: {
-          xxs: "none",
-          md: "block",
-        },
-      }}
-    >
-      <Grid
-        container
-        direction="column"
-        gap={1}
-      >
+    <Box sx={{ position: "fixed", width: { md: "232px", lg: "286px" }, top: "2rem", display: { xxs: "none", md: "block" } }}>
+      <Stack spacing={1}>
         <SearchBar />
-        <PeopleToFollow />
-      </Grid>
-
+        <PeopleYouFollow />
+      </Stack>
     </Box>
   );
 }

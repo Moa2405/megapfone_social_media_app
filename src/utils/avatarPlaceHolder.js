@@ -1,8 +1,9 @@
+
+//displaying random background color on avatar if no image is provided
 const stringToColor = (string) => {
   let hash = 0;
   let i;
 
-  /* eslint-disable no-bitwise */
   for (i = 0; i < string.length; i += 1) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
@@ -13,20 +14,15 @@ const stringToColor = (string) => {
     const value = (hash >> (i * 8)) & 0xff;
     color += `00${value.toString(16)}`.slice(-2);
   }
-  /* eslint-enable no-bitwise */
 
   return color;
 }
 
-//replacing underscores with spaces on author name
-
-
+//displaying first letter of username as avatar if no image is provided
 export const stringAvatar = (name) => {
 
+  //replacing underscores with spaces on author name
   const AuthorName = name.replaceAll("_", " ");
-
-  //to use on avatar
-  const AuthorNameAvatar = AuthorName.toUpperCase()
 
   //checking if author name has more than one word and if so 
   //only taking the first letter of each word and displaying it in the avatar,

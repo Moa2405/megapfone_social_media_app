@@ -8,15 +8,8 @@ import PostMedia from "./PostMedia";
 import PostOptionBtn from "./PostOptionsBtn";
 import { TransitionGroup } from 'react-transition-group';
 import { Link } from "react-router-dom";
-import ErrorAlert from "../../alert/ErrorAlert";
 
 const Posts = ({ posts }) => {
-
-  if (!posts) {
-    return (
-      <ErrorAlert />
-    )
-  };
 
   return (
     <>
@@ -44,13 +37,17 @@ const Posts = ({ posts }) => {
                   {/* post title */}
                   <Link style={{ color: "inherit", textDecoration: "none" }} to={`/post/${post.id}`}>
                     <Stack spacing={1}>
-                      <Typography noWrap={true} variant="h5" component="h2">
-                        {post.title}
-                      </Typography>
+                      <Box sx={{ maxWidth: "100%", overflowWrap: "break-word" }}>
+                        <Typography variant="h5" component="h2">
+                          {post.title}
+                        </Typography>
+                      </Box>
                       {/* post body */}
-                      <Typography noWrap={true} variant="body1">
-                        {post.body}
-                      </Typography>
+                      <Box sx={{ maxWidth: "100%", overflowWrap: "break-word" }}>
+                        <Typography variant="body1">
+                          {post.body}
+                        </Typography>
+                      </Box>
                     </Stack>
                   </Link>
                   {/* post tags */}

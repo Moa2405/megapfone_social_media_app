@@ -1,49 +1,50 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useAuth } from "../../context/authContext";
 import { useParams } from 'react-router-dom';
 import url from "../../common/url";
-import { useTheme } from "@mui/system";
 import ProfileMedia from "../../components/profile/ProfileMedia";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
 import UsersProfilePosts from "../../components/profile/UsersProfilesPosts";
 
 const UsersProfile = () => {
-  const { user, updateUser } = useAuth();
+  const { user } = useAuth();
   const { name } = useParams();
   const { response, error, loading, cancel, fetchData } = useAxiosHook();
-  const theme = useTheme();
+  console.log(name);
+
   const [userProfile, setUserProfile] = useState([]);
   const [profileMedia, setProfileMedia] = useState([]);
-  const api = url.profiles.profile(name);
-  const mutedTextColor = theme.palette.mode === "dark" ? theme.palette.grey[500] : theme.palette.grey[600]
-
-  // if (userProfile.name) {
-  //   const isFollowing = user.following.find(following => following.name === userProfile.name);
-  //   isFollowing ? setFollow(true) : setFollow(false);
-  // }
+  const [nameOfUser, setNameOfUser] = useState(name);
 
   const handleFollow = () => {
     console.log(user.following);
   }
 
   useEffect(() => {
-    fetchData({
-      method: "GET",
-      url: api,
-    });
+    let mounted = true;
+
+    if (mounted) {
+      fetchData({
+        method: "GET",
+        url: url.profiles.profile(name),
+      });
+      setNameOfUser(name)
+    }
 
     return () => {
+      mounted = false;
       clearInterval(fetchData);
-      cancel();
+      // cancel();
     }
-  }, []);
+  }, [name]);
 
   useEffect(() => {
     let mounted = true;
 
     if (mounted && response.name) {
       setUserProfile(response);
+      console.log(response);
       setProfileMedia({
         banner: response.banner,
         avatar: response.avatar
@@ -70,7 +71,7 @@ const UsersProfile = () => {
                   <Typography variant="body2" fontWeight="bold" component="p">
                     {userProfile._count.followers}
                   </Typography>
-                  <Typography variant="body2" color={mutedTextColor} fontWeight="bold" component="p">
+                  <Typography variant="body2" color="textSecondary" fontWeight="bold" component="p">
                     Followers
                   </Typography>
                 </Stack>
@@ -78,7 +79,7 @@ const UsersProfile = () => {
                   <Typography variant="body2" fontWeight="bold" component="p">
                     {userProfile._count.following}
                   </Typography>
-                  <Typography variant="body2" color={mutedTextColor} fontWeight="bold" component="p">
+                  <Typography variant="body2" color="textSecondary" fontWeight="bold" component="p">
                     Following
                   </Typography>
                 </Stack>
@@ -86,7 +87,7 @@ const UsersProfile = () => {
                   <Typography variant="body2" fontWeight="bold" component="p">
                     {userProfile._count.posts}
                   </Typography>
-                  <Typography variant="body2" color={mutedTextColor} fontWeight="bold" component="p">
+                  <Typography variant="body2" color="textSecondary" fontWeight="bold" component="p">
                     Posts
                   </Typography>
                 </Stack>
@@ -95,7 +96,9 @@ const UsersProfile = () => {
           </Stack>
         </div>
       )}
-      <UsersProfilePosts name={name} />
+      <Box mt={2}>
+        <UsersProfilePosts name={nameOfUser} />
+      </Box>
     </>
   );
 

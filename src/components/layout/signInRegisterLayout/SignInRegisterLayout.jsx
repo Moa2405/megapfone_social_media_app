@@ -33,7 +33,9 @@ const SignInRegisterLayout = () => {
           }}
         >
           <img
-            src="/social-media-welcome.jpg"
+            src={theme.palette.mode === "dark" ?
+              "/megaphone_welcome_dark-mode.jpg" :
+              "/megaphone_welcome_light-mode.jpg"}
             alt="social media welcome"
             style={{
               width: "100%",

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAuth } from '../../context/authContext';
+import { useAuth } from '../../context/authContext'
 import url from "../../common/url";
 import { Alert, Box, Divider, Stack, TextField, Typography } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';

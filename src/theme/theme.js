@@ -1,118 +1,80 @@
 export const light = {
-
+  breakpoints: {
+    values: {
+      xxs: 0,
+      xs: 500,
+      sm: 600,
+      md: 960,
+      lg: 1200,
+      xl: 1920,
+    },
+  },
   palette: {
     mode: "light",
-
     primary: {
       main: "#58C190",
       light: "#A2EFCB",
       dark: "#54CE95",
       contrastText: "#000000",
     },
+    secondary: {
+      main: "#FFFFFF",
+      light: "#E6E6E6",
+      dark: "#D0D0D0",
+      contrastText: "#000000",
+    },
     error: {
       main: "#CF6679",
       light: "#FF91A5",
       dark: "#DD4C66",
       contrastText: "#000000",
     },
+    background: {
+      paper: "#DEDEDE",
+      default: "#DEDEDE",
+      defaultChannel: "222 222 222",
+    },
   },
+};
 
+export const dark = {
   breakpoints: {
     values: {
       xxs: 0,
-      xs: 450,
+      xs: 500,
       sm: 600,
       md: 960,
       lg: 1200,
       xl: 1920,
     },
   },
-};
-export const dark = {
-
   palette: {
     mode: "dark",
-
     primary: {
       main: "#6CF0B2",
       light: "#A2EFCB",
       dark: "#54CE95",
       contrastText: "#000000",
     },
+    secondary: {
+      main: "#FFFFFF",
+      light: "#E6E6E6",
+      dark: "#D0D0D0",
+      contrastText: "#000000",
+    },
+    typography: {
+      fontSize: 12,
+    },
     error: {
       main: "#CF6679",
       light: "#FF91A5",
       dark: "#DD4C66",
       contrastText: "#000000",
     },
-  },
-
-  breakpoints: {
-    values: {
-      xxs: 0,
-      xs: 450,
-      sm: 600,
-      md: 960,
-      lg: 1200,
-      xl: 1920,
+    background: {
+      paper: "#0d1117",
+      default: "#0d1117",
+      defaultChannel: "13 17 23",
     },
   },
 };
-
-// const getDesignTokens = (mode) => ({
-//   palette: {
-//     mode,
-//     ...(mode === 'light'
-//       ? {
-//           // palette values for light mode
-//           primary: amber,
-//           divider: amber[200],
-//           text: {
-//             primary: grey[900],
-//             secondary: grey[800],
-//           },
-//         }
-//       : {
-//           // palette values for dark mode
-//           primary: deepOrange,
-//           divider: deepOrange[700],
-//           background: {
-//             default: deepOrange[900],
-//             paper: deepOrange[900],
-//           },
-//           text: {
-//             primary: '#fff',
-//             secondary: grey[500],
-//           },
-//         }),
-//   },
-// });
-
-// export default function App() {
-//   const [mode, setMode] = useState('light');
-//   const colorMode = useMemo(
-//     () => ({
-//       // The dark mode switch would invoke this method
-//       toggleColorMode: () => {
-//         setMode((prevMode) =>
-//           prevMode === 'light' ? 'dark' : 'light',
-//         );
-//       },
-//     }),
-//     [],
-//   );
-
-//   // Update the theme only if the mode changes
-//   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
-
-//   return (
-//     <ColorModeContext.Provider value={colorMode}>
-//       <ThemeProvider theme={theme}>
-//         <Page />
-//       </ThemeProvider>
-//     </ColorModeContext.Provider>
-//   );
-// }
-
-
-

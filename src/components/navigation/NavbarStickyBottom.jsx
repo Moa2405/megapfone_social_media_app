@@ -1,64 +1,67 @@
 import { useState } from "react";
 import { useAuth } from "../../context/authContext";
+import { useThemeMode } from "../../context/themeContext"
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
-import SearchIcon from '@mui/icons-material/Search';
+import CreatePost from "../post/createPost/CreatePost";
 import SettingsIcon from '@mui/icons-material/Settings';
-import { IconButton, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Paper, Stack } from '@mui/material';
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Paper, Stack } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useTheme } from "@mui/system";
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useThemeMode } from "../../context/themeContext"
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import Brightness2Icon from '@mui/icons-material/Brightness2';
-
-import CreatePost from "../post/createPost/CreatePost";
+import SearchBar from "../searchBar/SearchBar";
 
 const NavbarStickyBottom = () => {
 
   const theme = useTheme();
-
   const { handleMode } = useThemeMode();
   const { logout } = useAuth();
   const handleLogout = () => logout();
-
-
   const [anchorEl, setAnchorEl] = useState(null);
+  const handleMenu = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleTheme = () => {
+    handleMode();
+    handleClose();
+  }
 
   return (
-    <Paper sx={{ display: { xs: "none" }, position: "fixed", bottom: "0", width: "100%", zIndex: "1000", padding: "17px 14px", }}
-    >
+    <Paper sx={{ display: { xs: "none" }, position: "fixed", bottom: "0", width: "100%", zIndex: "1000", padding: "17px 14px", }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
+        {/* navigate home */}
         <NavLink to="/" style={{ textDecoration: "none", color: "inherit", backgroundColor: "inherit" }}>
-          <HomeIcon fontSize="large" color="action" />
+          <IconButton>
+            <HomeIcon color="action" />
+          </IconButton>
         </NavLink>
-        <NavLink to="/profile" style={{ textDecoration: "none", color: "inherit", backgroundColor: "inherit" }}>
-          <PersonIcon fontSize="large" color="action" />
+        {/* navigate profile */}
+        <NavLink to="/user/myProfilePage" style={{ textDecoration: "none", color: "inherit", backgroundColor: "inherit" }}>
+          <IconButton>
+            <PersonIcon color="action" />
+          </IconButton>
         </NavLink>
+        {/* navigate create post */}
         <CreatePost createPost={true} />
-        <SearchIcon fontSize="large" color="action" />
-        {/* <SettingsIcon fontSize="large" color="action" /> */}
+        {/* navigate search */}
+        <SearchBar />
+        {/* navigate settings */}
         <div>
           <IconButton
-            size="large"
+            size="small"
             aria-label="setting"
-            aria-controls="menu-appbar"
+            aria-controls="appbar-settings"
             aria-haspopup="true"
             onClick={handleMenu}
             color="inherit"
+            p="0px"
           >
-            <SettingsIcon fontSize="large" color="action" />
+            <SettingsIcon color="action" />
           </IconButton>
           <Menu
-            id="menu-appbar"
+            id="appbar-settings"
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: 'top',
@@ -70,32 +73,28 @@ const NavbarStickyBottom = () => {
               horizontal: 'right',
             }}
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+          // onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>
-              {theme.palette.mode === "dark" ? (
-                <ListItemButton onClick={handleMode} sx={{ md: { pl: 4 }, borderRadius: "0.25rem" }}>
-                  <ListItemIcon>
-                    <WbSunnyIcon />
-                  </ListItemIcon>
-                  <ListItemText primaryTypographyProps={{ fontSize: "18px", color: theme.palette.action.active }} primary="Light mode" />
-                </ListItemButton>
-              ) : (
-                <ListItemButton onClick={handleMode} sx={{ md: { pl: 4 }, borderRadius: "0.25rem" }}>
-                  <ListItemIcon>
-                    <Brightness2Icon />
-                  </ListItemIcon>
-                  <ListItemText primaryTypographyProps={{ fontSize: "18px", color: theme.palette.action.active }} primary="Dark mode" />
-                </ListItemButton>
-              )}
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <ListItemButton onClick={handleLogout} sx={{ md: { pl: 4 }, borderRadius: "0.25rem" }}>
-                <ListItemIcon>
-                  <LogoutIcon />
+            {theme.palette.mode === "dark" ? (
+              <MenuItem onClick={handleTheme}>
+                <ListItemIcon sx={{ md: { pl: 4 }, borderRadius: "0.25rem" }}>
+                  <WbSunnyIcon />
                 </ListItemIcon>
-                <ListItemText primaryTypographyProps={{ fontSize: "18px", color: theme.palette.action.active }} primary="Sign out" />
-              </ListItemButton>
+                <ListItemText primary="Light mode" />
+              </MenuItem>
+            ) : (
+              <MenuItem onClick={handleTheme}>
+                <ListItemIcon sx={{ md: { pl: 4 }, borderRadius: "0.25rem" }}>
+                  <Brightness2Icon />
+                </ListItemIcon>
+                <ListItemText primary="Dark mode" />
+              </MenuItem>
+            )}
+            <MenuItem onClick={handleLogout}>
+              <ListItemIcon sx={{ md: { pl: 4 }, borderRadius: "0.25rem" }}>
+                <LogoutIcon />
+              </ListItemIcon>
+              Sign out
             </MenuItem>
           </Menu>
         </div>
@@ -104,19 +103,4 @@ const NavbarStickyBottom = () => {
   );
 }
 
-
-
 export default NavbarStickyBottom;
-
-{/* <SettingsIcon onClick={handleOpenSettings} fontSize="large" color="action" />
-        <Collapse orientation="vertical" in={openSettings} timeout="auto" unmountOnExit>
-          <Divider />
-          <List component="div" disablePadding>
-            <ListItemButton onClick={handleLogout} sx={{ md: { pl: 4 }, borderRadius: "0.25rem" }}>
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primaryTypographyProps={{ fontSize: "18px", color: theme.palette.action.active }} primary="Sign out" />
-            </ListItemButton>
-          </List>
-        </Collapse> */}

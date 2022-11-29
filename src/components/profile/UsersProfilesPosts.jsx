@@ -9,27 +9,31 @@ import { Typography } from "@mui/material";
 const UsersProfilePosts = ({ name }) => {
 
   const { response, error, loading, cancel, fetchData } = useAxiosHook();
-  const [message, setMessage] = useState(null);
-  const [posts, setPosts] = useState(null);
-
-  useEffect(() => {
-    fetchData({
-      method: "GET",
-      url: url.posts.postsByAuthor(name),
-    });
-
-    return () => {
-      clearInterval(fetchData);
-      cancel();
-    }
-  }, []);
 
   useEffect(() => {
     let mounted = true;
-    if (mounted && response.length > 0) {
-      setPosts(response);
-    } else {
-      setMessage("This user has no posts yet");
+
+    if (mounted) {
+      fetchData({
+        method: "GET",
+        url: url.posts.postsByAuthor(name),
+      });
+
+    }
+
+    return () => {
+      mounted = false;
+      clearInterval(fetchData);
+
+      // cancel();
+    }
+  }, [name]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      console.log("response", response);
     }
 
     return () => {
@@ -37,12 +41,21 @@ const UsersProfilePosts = ({ name }) => {
     }
   }, [response]);
 
+  if (loading) {
+    return <PostSkeleton />
+  }
+
+  if (error) {
+    return <ErrorAlert />
+  }
+
+  if (response.length === 0) {
+    return <Typography>This user has no posts yet</Typography>
+  }
+
   return (
     <>
-      {loading && <PostSkeleton />}
-      {error && <ErrorAlert />}
-      {!loading && !error && <Posts posts={posts} />}
-      {!loading && !error && !posts && <Typography>{message}</Typography>}
+      <Posts posts={response} />
     </>
   );
 }

@@ -30,7 +30,7 @@ import ErrorAlert from "../../alert/ErrorAlert";
 
 const schema = yup.object().shape({
   title: yup.string().required("This field is required").max(30, "Title must be less than 30 characters"),
-  body: yup.string(),
+  body: yup.string().max(280, "Message must be less than 280 characters"),
   media: yup.string().url("Must be a valid url").matches(/^$|^https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|bmp|tiff|tif|svg|svgz)(?:\?.*)?$/, "Must be a valid image url"),
 });
 
@@ -53,7 +53,7 @@ const CreatePost = () => {
   const { activateSnackBar } = useSnackBar();
   const theme = useTheme();
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       title: "",
@@ -90,7 +90,6 @@ const CreatePost = () => {
   };
 
   const handleSubmitPost = async (data) => {
-    console.log("mounted create post");
 
     const postData = { ...data, tags };
     const newObject = formatData(postData);
@@ -112,6 +111,7 @@ const CreatePost = () => {
         !Array.isArray(response)) {
         addPost(response);
         activateSnackBar("Post created successfully", "success");
+        reset();
         setOpenModal(false);
         console.log(response);
       } else if (typeof response === 'string') {
@@ -121,7 +121,6 @@ const CreatePost = () => {
 
     return () => {
       mounted = false;
-      console.log("clean up create post effect");
     };
 
   }, [response]);
@@ -132,7 +131,12 @@ const CreatePost = () => {
   }
 
   const handleOpenPostModal = () => setOpenModal(true);
-  const handleClosePostModal = () => setOpenModal(false);
+
+  const handleClosePostModal = () => {
+    reset();
+    setOpenModal(false)
+    setTags([]);
+  };
 
   const style = {
     position: 'absolute',
@@ -150,7 +154,7 @@ const CreatePost = () => {
 
   return (
     <>
-      <Avatar onClick={handleOpenPostModal} sx={{ bgcolor: theme.palette.primary.main, [theme.breakpoints.up("md")]: { display: "none", }, }}>
+      <Avatar onClick={handleOpenPostModal} sx={{ cursor: "pointer", bgcolor: theme.palette.primary.main, [theme.breakpoints.up("md")]: { display: "none", }, }}>
         <img src="/logo-black.svg" alt="Create a post" height="20" style={{ color: "#000" }} />
       </Avatar>
       <Button

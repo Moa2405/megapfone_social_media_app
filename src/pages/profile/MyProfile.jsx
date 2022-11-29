@@ -21,14 +21,18 @@ const MeProfile = () => {
     banner: user.banner,
     avatar: user.avatar,
   });
+  console.log(user);
   const urlApi = url.posts.postsByAuthor(user.name);
 
   useEffect(() => {
+    let mounted = true;
 
-    fetchData({
-      method: "GET",
-      url: urlApi,
-    });
+    if (mounted) {
+      fetchData({
+        method: "GET",
+        url: urlApi,
+      });
+    }
 
     return () => {
       clearInterval(fetchData);
@@ -40,7 +44,7 @@ const MeProfile = () => {
     let mounted = true;
 
     if (mounted) {
-      setInitialPosts(response);
+      setInitialPosts(i => i = response);
     }
 
     return () => mounted = false;
@@ -51,45 +55,40 @@ const MeProfile = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          width: "100%",
-          height: "200px",
-          position: "relative"
-        }}
-      >
-        <ProfileMedia name={user.name} media={profileImages} />
-      </Box>
-      <Stack direction="row" px={2} alignItems="center" justifyContent="space-between">
-        <Stack mt={6}>
-          <Typography variant="h5" fontWeight="bold" component="h1">
-            {userName}
-          </Typography>
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Stack direction="row" alignItems="center" spacing="5px">
-              <Typography variant="body2" fontWeight="bold" component="p">
-                {user.followers.length}
-              </Typography>
-              <Typography variant="body2" color={mutedTextColor} fontWeight="bold" component="p">
-                Followers
-              </Typography>
-            </Stack>
-            <Stack direction="row" alignItems="center" spacing="5px">
-              <Typography variant="body2" fontWeight="bold" component="p">
-                {user.following.length}
-              </Typography>
-              <Typography variant="body2" color={mutedTextColor} fontWeight="bold" component="p">
-                Following
-              </Typography>
+      {/* banner and avatar */}
+      <ProfileMedia name={user.name} media={profileImages} />
+      <Box>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Stack mt={6}>
+            <Typography variant="h5" fontWeight="bold" component="h1">
+              {userName}
+            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Stack direction="row" alignItems="center" spacing="5px">
+                <Typography variant="body2" fontWeight="bold" component="p">
+                  {user.followers.length}
+                </Typography>
+                <Typography variant="body2" color={mutedTextColor} fontWeight="bold" component="p">
+                  Followers
+                </Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing="5px">
+                <Typography variant="body2" fontWeight="bold" component="p">
+                  {user.following.length}
+                </Typography>
+                <Typography variant="body2" color={mutedTextColor} fontWeight="bold" component="p">
+                  Following
+                </Typography>
+              </Stack>
             </Stack>
           </Stack>
+          <EditProfile setProfileImages={setProfileImages} />
         </Stack>
-        <EditProfile setProfileImages={setProfileImages} />
-      </Stack>
-      <Box sx={{ mt: 4 }}>
-        {loading && <PostSkeleton />}
-        {error && <ErrorAlert />}
-        {!loading && !error && <Posts posts={postsInContext} />}
+        <Box sx={{ mt: 4 }}>
+          {loading && <PostSkeleton />}
+          {error && <ErrorAlert />}
+          {!loading && !error && <Posts posts={postsInContext} />}
+        </Box>
       </Box>
     </>
   );

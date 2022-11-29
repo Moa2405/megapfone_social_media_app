@@ -21,14 +21,8 @@ const PostAuthor = ({ author, created }) => {
       <Stack direction="row" gap={1} alignItems="center">
         {author.avatar ? <Avatar src={author.avatar} alt={author.name} /> : <Avatar {...stringAvatar(author.name)} />}
         <Typography fontWeight="bold">{AuthorName}</Typography>
-        <Typography
-          variant="body2"
-          fontWeight="bold"
-          component="p"
-          sx={{
-            color: theme.palette.mode === "dark" ? theme.palette.grey[500] : theme.palette.grey[600],
-          }}
-        >
+        <Typography variant="body2" fontWeight="bold" component="p"
+          sx={{ color: theme.palette.mode === "dark" ? theme.palette.grey[500] : theme.palette.grey[600] }}>
           {formattedDate}
         </Typography>
       </Stack>

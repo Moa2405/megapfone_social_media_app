@@ -8,7 +8,6 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSnackBar } from "../../context/snackBarContext";
 import {
-  Box,
   Modal,
   Button,
   TextField,
@@ -18,18 +17,16 @@ import {
   InputAdornment,
   Divider,
   Avatar,
-  Alert,
   Paper
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingButton } from "@mui/lab";
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import ErrorAlert from "../alert/ErrorAlert";
-import { PropaneTankSharp } from "@mui/icons-material";
 
 const schema = yup.object().shape({
-  banner: yup.string().url("Must be a valid url").matches(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i, "Must be a valid image url"),
-  avatar: yup.string().url("Must be a valid url").matches(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i, "Must be a valid image url"),
+  banner: yup.string().url("Must be a valid url"),
+  avatar: yup.string().url("Must be a valid url")
 });
 
 const EditProfile = ({ setProfileImages }) => {
@@ -38,11 +35,6 @@ const EditProfile = ({ setProfileImages }) => {
   const theme = useTheme();
   const { activateSnackBar } = useSnackBar();
   const [openModal, setOpenModal] = useState(false);
-  const [snackBar, setSnackBar] = useState({
-    severity: "success",
-    message: "Profile updated successfully",
-    open: false
-  });
 
   const [previewBannerImg, setPreviewBannerImg] = useState(user.banner);
   const [previewAvatarImg, setPreviewAvatarImg] = useState(user.avatar);
@@ -50,10 +42,10 @@ const EditProfile = ({ setProfileImages }) => {
   const [disabledPreviewAvatarBtn, setDisabledPreviewAvatarBtn] = useState(false);
   const { response, error, loading, cancel, fetchData } = useAxiosHook();
 
-  const { control, handleSubmit, watch, trigger, formState: { errors } } = useForm({
+  const { control, handleSubmit, reset, watch, trigger, formState: { errors } } = useForm({
     defaultValues: {
-      banner: user.banner,
-      avatar: user.avatar
+      banner: user.banner === null ? "" : user.banner,
+      avatar: user.avatar === null ? "" : user.avatar,
     },
     resolver: yupResolver(schema)
   });
@@ -76,12 +68,15 @@ const EditProfile = ({ setProfileImages }) => {
   }
 
   const handleUpdateProfile = async (data) => {
-    console.log(data);
+    let mediaData = {
+      banner: data.banner === "" ? null : data.banner,
+      avatar: data.avatar === "" ? null : data.avatar
+    }
 
     fetchData({
       method: "PUT",
       url: url.profiles.UpdateProfileMedia(user.name),
-      data: data
+      data: mediaData
     });
   }
 
@@ -96,6 +91,7 @@ const EditProfile = ({ setProfileImages }) => {
       updateUser(newUserObject);
       console.log(user);
       setProfileImages({ banner: response.banner, avatar: response.avatar });
+      reset()
       handleCloseEditProfileModal();
       activateSnackBar("Profile updated successfully", "success");
     }
@@ -104,7 +100,10 @@ const EditProfile = ({ setProfileImages }) => {
   }, [response]);
 
   const handleOpenEditProfileModal = () => setOpenModal(true);
-  const handleCloseEditProfileModal = () => setOpenModal(false);
+  const handleCloseEditProfileModal = () => {
+    setOpenModal(false)
+    reset();
+  };
 
   const style = {
     position: 'absolute',
@@ -120,7 +119,18 @@ const EditProfile = ({ setProfileImages }) => {
 
   return (
     <>
-      <Button variant="outlined" onClick={handleOpenEditProfileModal}>Edit profile</Button>
+      <Button
+        sx={{
+          mt: "-3rem",
+          borderColor: theme.palette.mode === "dark" ? theme.palette.text : theme.palette.grey[900],
+          color: theme.palette.mode === "dark" ? theme.palette.text : theme.palette.grey[900],
+        }}
+        variant="outlined"
+        size="small"
+        onClick={handleOpenEditProfileModal}
+      >
+        Edit profile
+      </Button>
       <Modal
         open={openModal}
         onClose={handleCloseEditProfileModal}

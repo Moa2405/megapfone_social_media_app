@@ -7,7 +7,7 @@ const PostMedia = ({ media }) => {
   //need to filter out the media that is not an image
 
   if (media) {
-    const isImage = media.match(/\.(jpeg|jpg|gif|png)$/);
+    const isImage = media.match(/^(http|https):\/\/[^ "]+$/);
     if (isImage) {
       return (
         <>

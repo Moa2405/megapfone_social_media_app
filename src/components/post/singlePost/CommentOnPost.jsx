@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Box, Button, InputAdornment, TextField } from "@mui/material";
+import { Box, InputAdornment, TextField } from "@mui/material";
 import { useTheme } from '@mui/system';
 import useAxios from "../../../hooks/useAxios";
 import url from "../../../common/url";
@@ -43,13 +43,8 @@ const CommentOnPost = ({ postId }) => {
   }
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-      }}
-    >
-      <Box
-      >
+    <Box sx={{ width: "100%" }}>
+      <Box>
         <TextField
           id="input-with-icon-textfield"
           label="Comment..."
@@ -73,7 +68,7 @@ const CommentOnPost = ({ postId }) => {
                   Post
                 </LoadingButton>
               </InputAdornment>
-            ),
+            )
           }}
           variant="filled"
           helperText={error}
