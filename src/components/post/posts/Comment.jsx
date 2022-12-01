@@ -1,49 +1,41 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Box, InputAdornment, TextField } from "@mui/material";
-import { useAxiosHook } from "../../../hooks/useAxiosHook";
 import url from "../../../common/url";
 import { LoadingButton } from "@mui/lab";
 import { useSnackBar } from "../../../context/snackBarContext";
+import useAxios from "../../../hooks/useAxios";
+import { useMutation } from 'react-query';
 
 const Comment = ({ postId }) => {
 
+  const axios = useAxios();
   const { activateSnackBar } = useSnackBar();
   const commentRef = useRef();
   const [disabled, setDisabled] = useState(true);
-  const { response, loading, error, fetchData } = useAxiosHook();
 
   const handleOnChange = (e) => {
     e.target.value.length > 0 ? setDisabled(false) : setDisabled(true);
   }
 
-  const handleComment = () => {
-    const options = {
-      body: commentRef.current.value
-    }
-
-    fetchData({
-      method: "post",
-      url: url.posts.comment(postId),
-      data: options
-    })
+  const postComment = async () => {
+    const { data } = await axios.post(url.posts.comment(postId), { body: commentRef.current.value });
+    return data;
   }
 
-  useEffect(() => {
-    let mounted = true;
-
-    if (mounted && response.created) {
+  const { isLoading, error, mutate } = useMutation(postComment, {
+    onSuccess: () => {
       commentRef.current.value = "";
       setDisabled(true);
       activateSnackBar("Comment added successfully", "success");
+    },
+    onError: () => {
+      activateSnackBar("Something went wrong", "error");
     }
+  });
 
-    return () => mounted = false;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response])
-
-
-
+  const handleComment = () => {
+    mutate();
+  }
 
   return (
     <Box
@@ -67,7 +59,7 @@ const Comment = ({ postId }) => {
             endAdornment: (
               <InputAdornment position="end">
                 <LoadingButton
-                  loading={loading}
+                  loading={isLoading}
                   disabled={disabled}
                   onClick={handleComment}
                   sx={{ marginBottom: "16px" }}

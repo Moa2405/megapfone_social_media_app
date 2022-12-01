@@ -1,31 +1,24 @@
 import { CircularProgress, ListItemIcon, MenuItem, Stack, Typography } from "@mui/material"
-import { useAxiosHook } from "../../hooks/useAxiosHook";
+import useAxios from "../../hooks/useAxios";
+import { useMutation } from "react-query";
 import { useAuth } from "../../context/authContext";
 import ErrorIcon from '@mui/icons-material/Error';
 import url from "../../common/url";
-import { useEffect } from "react";
 import { useSnackBar } from "../../context/snackBarContext";
 
 const Follow = ({ post, setFollows, closeMenu }) => {
 
   const { user, updateUser } = useAuth();
-  const { response, error, loading, fetchData } = useAxiosHook();
+  const axios = useAxios();
   const { activateSnackBar } = useSnackBar();
 
-  const handleFollow = () => {
+  const follow = async () => {
+    const { data } = await axios.put(url.profiles.follow(post.author.name));
+    return data;
+  }
 
-    fetchData({
-      method: "PUT",
-      url: url.profiles.follow(post.author.name),
-    });
-  };
-
-  useEffect(() => {
-    let mounted = true;
-
-    if (mounted && response.name) {
-
-      //updating the user object in context
+  const { mutate, isLoading, isError } = useMutation(follow, {
+    onSuccess: () => {
       const updatedUser = { ...user, following: [...user.following, { name: post.author.name, avatar: post.author.avatar }] };
       updateUser(updatedUser);
 
@@ -33,25 +26,25 @@ const Follow = ({ post, setFollows, closeMenu }) => {
       setFollows("following");
       closeMenu();
       activateSnackBar("You are now following " + post.author.name, "success");
+    },
+    onError: () => {
+      activateSnackBar("Something went wrong", "error");
     }
-    if (error) {
-      activateSnackBar("Some thing went wrong", "error");
-    }
+  });
 
-    return () => mounted = false;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response]);
+  const handleFollow = () => {
+    mutate();
+  };
 
   return (
     <MenuItem onClick={handleFollow}>
       <ListItemIcon>
         <Stack spacing={2} direction="row">
-          {error && <ErrorIcon color="error" />}
-          {loading && <CircularProgress size={20} />}
+          {isError && <ErrorIcon color="error" />}
+          {isLoading && <CircularProgress size={20} />}
           <Stack spacing={1}>
             <Typography variant="body1" component="p">Follow</Typography>
-            {error && <Typography variant="body1" color="error" component="p">Some thing went wrong</Typography>}
+            {isError && <Typography variant="body1" color="error">Some thing went wrong</Typography>}
           </Stack>
         </Stack>
       </ListItemIcon>

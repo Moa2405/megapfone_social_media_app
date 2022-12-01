@@ -26,7 +26,6 @@ const ReactToPost = ({ postId, reactions }) => {
       setReactionsArray(newReactionsArray);
     }
     console.log(reactionsArray);
-
   }
 
   const handleSelectedEmoji = async (emojiObject, event) => {

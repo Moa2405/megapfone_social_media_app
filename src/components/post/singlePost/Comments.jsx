@@ -4,20 +4,32 @@ import ReplyToComment from "./ReplayToComment";
 import { formatDistance } from "../../../utils/formatData";
 import { useTheme } from '@mui/system';
 import { Box, Collapse, Divider, Paper, Typography, Stack } from "@mui/material";
+import { useEffect, useState } from "react";
 
-const Comments = ({ comments }) => {
+const Comments = ({ comments, handleReplyState }) => {
 
+  const [commentsState, setCommentsState] = useState(null);
   const theme = useTheme();
   const replyDividerColor = theme.palette.mode === "dark" ? "#FFFFFF" : "#000000";
 
   //making a new array of comments, adding an array of replies to each comment
-  const commentsWithReply = comments.filter(comment => comment.replyToId === null);
-  const replies = comments.filter(comment => comment.replyToId !== null);
-  commentsWithReply.forEach(comment => {
-    comment.replies = replies.filter(reply => reply.replyToId === comment.id);
-  });
 
-  console.log(commentsWithReply);
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+
+      const commentsWithReply = comments.filter(comment => comment.replyToId === null);
+      const replies = comments.filter(comment => comment.replyToId !== null);
+      commentsWithReply.forEach(comment => {
+        comment.replies = replies.filter(reply => reply.replyToId === comment.id);
+      });
+
+      setCommentsState(commentsWithReply);
+    }
+    return () => {
+      mounted = false;
+    }
+  }, [comments]);
 
   if (comments.length === 0) {
     return (
@@ -31,7 +43,7 @@ const Comments = ({ comments }) => {
     <Stack spacing={3} sx={{ paddingTop: "50px" }}>
       <Typography variant="h5" component="h2">Comments</Typography>
       <TransitionGroup>
-        {commentsWithReply.map(comment => (
+        {commentsState && commentsState.map(comment => (
           <Collapse key={comment.id} timeout={500}>
             <Paper elevation={1} sx={{ p: 1, mb: 3 }}>
               <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 1 }}>
@@ -69,7 +81,7 @@ const Comments = ({ comments }) => {
                   </Collapse>
                 ))}
               </TransitionGroup>
-              <ReplyToComment postId={comment.postId} commentId={comment.id} />
+              <ReplyToComment postId={comment.postId} handleReplyState={handleReplyState} commentId={comment.id} />
             </Paper>
           </Collapse>
         ))}

@@ -1,7 +1,7 @@
 import { Typography, Stack, Avatar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { formatDistance } from "../../../utils/formatData"
+import { formatDistance } from "../../../utils/formatData";
 
 const PostAuthor = ({ author, created }) => {
 

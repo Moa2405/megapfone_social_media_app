@@ -120,18 +120,29 @@ const EditProfile = ({ setProfileImages }) => {
 
   return (
     <>
-      <Button
-        sx={{
-          mt: "-3rem",
-          borderColor: theme.palette.mode === "dark" ? theme.palette.text : theme.palette.grey[900],
-          color: theme.palette.mode === "dark" ? theme.palette.text : theme.palette.grey[900],
-        }}
-        variant="outlined"
-        size="small"
-        onClick={handleOpenEditProfileModal}
-      >
-        Edit profile
-      </Button>
+      {theme.palette.mode === "dark"
+        ?
+        (<Button
+          variant="outlined"
+          size="small"
+          color="secondary"
+          onClick={handleOpenEditProfileModal}
+        >
+          Edit Profile
+        </Button>)
+        :
+        (<Button
+          sx={{
+            borderColor: theme.palette.grey[900],
+            color: theme.palette.grey[900],
+          }}
+          variant="outlined"
+          size="small"
+          onClick={handleOpenEditProfileModal}
+        >
+          Edit profile
+        </Button>)
+      }
       <Modal
         open={openModal}
         onClose={handleCloseEditProfileModal}

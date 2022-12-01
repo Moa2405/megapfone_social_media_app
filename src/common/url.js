@@ -2,11 +2,11 @@ const url = {
   auth: {
     login: "/api/v1/social/auth/login",
     register: "/api/v1/social/auth/register",
+
   },
   posts: {
     createPost: "/api/v1/social/posts?_author=true&_comments=true&_reactions=true",
-    allPostsLimitFifty: "/api/v1/social/posts?_author=true&_comments=true&_reactions=true&limit=50",
-    allPostsNextFifty: "/api/v1/social/posts?_author=true&_comments=true&_reactions=true&limit=50&offset=50",
+    postsInfiniteScroll: "/api/v1/social/posts?_author=true&_comments=true&_reactions=true&limit=20&offset=",
     getPost: (id) => `/api/v1/social/posts/${id}?_author=true&_comments=true&_reactions=true`,
     getPostsByFollowing: `/api/v1/social/posts/following?_author=true&_comments=true&_reactions=true`,
     postsByAuthor: (author) => `/api/v1/social/profiles/${author}/posts?_author=true&_comments=true&_reactions=true`,
@@ -16,6 +16,8 @@ const url = {
     editPost: (id) => `/api/v1/social/posts/${id}?_author=true&_comments=true&_reactions=true`,
   },
   profiles: {
+    firstHundredUsers: "/api/v1/social/profiles?limit=100",
+    nextHundredUsers: "/api/v1/social/profiles?limit=100&offset=100",
     profiles: "/api/v1/social/profiles?limit=100",
     profile: (name) => `/api/v1/social/profiles/${name}`,
     UpdateProfileMedia: (name) => `/api/v1/social/profiles/${name}/media`,

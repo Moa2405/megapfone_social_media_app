@@ -2,50 +2,42 @@ import { TextField, InputAdornment, Modal, Paper, IconButton, Typography, Stack,
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from "@mui/system";
-import { useAxiosHook } from "../../hooks/useAxiosHook";
+import useAxios from "../../hooks/useAxios";
+import { useMutation } from "react-query";
 import url from "../../common/url";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { stringAvatar } from "../../utils/avatarPlaceHolder";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 import ErrorAlert from "../alert/ErrorAlert";
 
 const SearchBar = () => {
 
-  const { response, loading, error, fetchData } = useAxiosHook();
+  const axios = useAxios();
   const [openModal, setOpenModal] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
   const searchRef = useRef();
 
-  const handleOpenSearchModal = () => {
-    setOpenModal(true);
+  const fetchUsers = async () => {
+    const { data } = await axios.get(url.profiles.firstHundredUsers);
+    return data;
+  }
 
-    if (!response.length > 0) {
-      console.log(response);
-
-      fetchData({
-        method: "get",
-        url: url.profiles.profiles
-      })
+  const { data, isLoading, isError, mutate } = useMutation(fetchUsers, {
+    onSuccess: (data) => {
+      setSearchResults(data);
+      console.log(data);
     }
-  };
+  });
+
+  const handleOpenSearchModal = () => {
+    mutate();
+    setOpenModal(true);
+  }
 
   const handleCloseSearchModal = () => {
     setSearchResults([]);
     setOpenModal(false);
   };
-
-  useEffect(() => {
-    let isMounted = true;
-
-    if (isMounted && response.length > 0)
-      setSearchResults(response);
-
-    return () => {
-      isMounted = false;
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response]);
 
   const theme = useTheme();
   const searchIconColor = theme.palette.text.disabled;
@@ -69,12 +61,14 @@ const SearchBar = () => {
     if (searchRef.current.value.length === 0) {
       setSearchResults([]);
     } else {
-      const searchProfiles = response.filter((user) => {
+      const searchProfiles = data.filter((user) => {
         return user.name.toLowerCase().includes(searchRef.current.value.toLowerCase());
       })
       setSearchResults(searchProfiles);
     }
   }
+
+  console.log(searchResults);
 
   return (
     <>
@@ -97,9 +91,9 @@ const SearchBar = () => {
         aria-describedby="Search"
       >
         <Paper elevation={1} sx={style}>
-          {error && <ErrorAlert />}
-          {loading && <CircularProgress />}
-          {response.length > 0 && <Stack spacing={2}>
+          {isError && <ErrorAlert />}
+          {isLoading && <CircularProgress />}
+          {data && <Stack spacing={2}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" width="100%">
               <IconButton fontSize="large" onClick={handleCloseSearchModal}>
                 <CloseIcon />
@@ -156,7 +150,3 @@ const SearchBar = () => {
 }
 
 export default SearchBar;
-
-//q: git push -u origin master
-
-

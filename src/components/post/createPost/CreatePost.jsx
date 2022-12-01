@@ -27,7 +27,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ErrorAlert from "../../alert/ErrorAlert";
 
 const schema = yup.object().shape({
-  title: yup.string().required("This field is required").max(30, "Title must be less than 30 characters"),
+  title: yup.string().required("This field is required").max(280, "Title must be less than 280 characters"),
   body: yup.string().max(280, "Message must be less than 280 characters"),
   media: yup.string().url("Must be a valid url").matches(/^$|^https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|bmp|tiff|tif|svg|svgz)(?:\?.*)?$/, "Must be a valid image url"),
 });
@@ -152,7 +152,8 @@ const CreatePost = () => {
 
   return (
     <>
-      <Avatar onClick={handleOpenPostModal} sx={{ cursor: "pointer", bgcolor: theme.palette.primary.main, [theme.breakpoints.up("md")]: { display: "none", }, }}>
+      <Avatar onClick={handleOpenPostModal}
+        sx={{ cursor: "pointer", bgcolor: theme.palette.primary.main, [theme.breakpoints.up("md")]: { display: "none" } }}>
         <img src="/logo-black.svg" alt="Create a post" height="20" style={{ color: "#000" }} />
       </Avatar>
       <Button
@@ -268,8 +269,7 @@ const CreatePost = () => {
               mt={2}
             >
               <Stack
-                component="form"
-                noValidate
+                spacing={1}
                 autoComplete="off"
                 direction="row"
                 justifyContent="space-between"
@@ -300,7 +300,7 @@ const CreatePost = () => {
                       theme.palette.grey[300] :
                       theme.palette.grey[800],
                     color: theme.palette.mode === "light" ? "black" : "white",
-                    marginTop: "0.5rem",
+                    marginTop: "0.5rem"
                   }}
                 >
                   <AddIcon fontSize="small" />
@@ -329,7 +329,6 @@ const CreatePost = () => {
               variant="contained"
               color="primary"
               loading={loading}
-
             >
               Create Post
             </LoadingButton>

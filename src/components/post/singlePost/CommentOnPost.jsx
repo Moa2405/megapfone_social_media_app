@@ -1,46 +1,43 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Box, InputAdornment, TextField } from "@mui/material";
 import url from "../../../common/url";
 import { LoadingButton } from "@mui/lab";
-import { useAxiosHook } from "../../../hooks/useAxiosHook";
 import { useSnackBar } from "../../../context/snackBarContext";
+import useAxios from "../../../hooks/useAxios";
+import { useMutation } from 'react-query';
 
-const CommentOnPost = ({ postId }) => {
+const CommentOnPost = ({ postId, handleCommentState }) => {
 
   const { activateSnackBar } = useSnackBar();
-  const { response, loading, error, fetchData } = useAxiosHook();
   const commentRef = useRef();
   const [disabled, setDisabled] = useState(true);
+  const axios = useAxios();
+
+  const postComment = async () => {
+    const { data } = await axios.post(url.posts.comment(postId), { body: commentRef.current.value });
+    return data;
+  }
+
+  const { isLoading, mutate } = useMutation(postComment, {
+    onSuccess: (data) => {
+      handleCommentState(data);
+      commentRef.current.value = "";
+      console.log(data);
+      setDisabled(true);
+      activateSnackBar("Comment added successfully", "success");
+    },
+    onError: () => {
+      activateSnackBar("Something went wrong", "error");
+    }
+  });
 
   const handleOnChange = (e) => {
     e.target.value.length > 0 ? setDisabled(false) : setDisabled(true);
   }
 
-  const handleComment = async () => {
-    const options = {
-      body: commentRef.current.value
-    }
-
-    fetchData({
-      method: "post",
-      url: url.posts.comment(postId),
-      data: options
-    })
+  const handleComment = () => {
+    mutate();
   }
-
-  useEffect(() => {
-    let mounted = true;
-
-    if (mounted && response.created) {
-      commentRef.current.value = "";
-      setDisabled(true);
-      activateSnackBar("Comment added successfully", "success");
-    }
-
-    return () => mounted = false;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response])
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -59,7 +56,7 @@ const CommentOnPost = ({ postId }) => {
             endAdornment: (
               <InputAdornment position="end">
                 <LoadingButton
-                  loading={loading}
+                  loading={isLoading}
                   disabled={disabled}
                   onClick={handleComment}
                   sx={{ marginBottom: "16px" }}
@@ -71,7 +68,6 @@ const CommentOnPost = ({ postId }) => {
             )
           }}
           variant="filled"
-          helperText={error}
         />
       </Box>
     </Box>

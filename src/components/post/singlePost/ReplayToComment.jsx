@@ -1,43 +1,39 @@
-import { useEffect, useRef, useState } from "react";
-import { Box, InputAdornment, TextField } from "@mui/material";
-import { useAxiosHook } from "../../../hooks/useAxiosHook"
+import { useRef, useState } from "react";
+import useAxios from "../../../hooks/useAxios";
+import { useMutation } from 'react-query';
+import { useSnackBar } from "../../../context/snackBarContext";
 import url from "../../../common/url";
+import { Box, InputAdornment, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
-const ReplyToComment = ({ postId, commentId }) => {
+const ReplyToComment = ({ postId, commentId, handleReplyState }) => {
 
+  const { activateSnackBar } = useSnackBar();
   const commentRef = useRef();
   const [disabled, setDisabled] = useState(true);
-  const { response, loading, error, fetchData } = useAxiosHook();
+  const axios = useAxios();
+
+  const postComment = async (data) => {
+    const response = await axios.post(url.posts.comment(postId), data)
+    return response;
+  }
+
+  const { isLoading, mutate } = useMutation(postComment, {
+    onSuccess: (data) => {
+      handleReplyState(data);
+      activateSnackBar("Reply posted successfully", "success");
+      console.log(data);
+      commentRef.current.value = "";
+      setDisabled(true);
+    },
+    onError: () => {
+      activateSnackBar("Something went wrong", "error");
+    }
+  });
 
   const handleOnChange = (e) => {
     e.target.value.length > 0 ? setDisabled(false) : setDisabled(true);
   }
-
-  const handleComment = () => {
-    const options = {
-      body: commentRef.current.value,
-      replyToId: commentId
-    }
-
-    fetchData({
-      method: "post",
-      url: url.posts.comment(postId),
-      data: options
-    })
-  }
-
-  useEffect(() => {
-    let isMounted = true;
-
-    if (isMounted && response.body) {
-      console.log(response);
-    }
-
-    return () => {
-      isMounted = false;
-    }
-  }, [response])
 
   return (
     <Box sx={{ width: "100%", mt: 2 }}>
@@ -56,9 +52,11 @@ const ReplyToComment = ({ postId, commentId }) => {
             endAdornment: (
               <InputAdornment position="end">
                 <LoadingButton
-                  loading={loading}
+                  loading={isLoading}
                   disabled={disabled}
-                  onClick={handleComment}
+                  onClick={() => {
+                    mutate({ body: commentRef.current.value, replyToId: commentId })
+                  }}
                   sx={{ marginBottom: "16px" }}
                   variant="text"
                 >
@@ -68,7 +66,6 @@ const ReplyToComment = ({ postId, commentId }) => {
             ),
           }}
           variant="filled"
-          helperText={error}
         />
       </Box>
     </Box>

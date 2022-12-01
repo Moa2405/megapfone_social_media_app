@@ -3,30 +3,30 @@ import useAxios from "../../hooks/useAxios";
 import { useMutation } from "react-query";
 import url from "../../common/url";
 import { useSnackBar } from "../../context/snackBarContext";
-import { useTheme } from "@mui/system"
+import { useTheme } from "@mui/system";
 
-const FollowOnProfilePage = ({ profile, handleUpdateFollowing }) => {
+const UnFollowOnProfilePage = ({ profile, handleUpdateFollowing }) => {
 
   const theme = useTheme();
   const axios = useAxios();
   const { activateSnackBar } = useSnackBar();
 
-  const follow = async () => {
-    const { data } = await axios.put(url.profiles.follow(profile.name));
+  const unFollow = async () => {
+    const { data } = await axios.put(url.profiles.unFollow(profile.name));
     return data;
   }
 
-  const { mutate, isLoading } = useMutation(follow, {
+  const { mutate, isLoading } = useMutation(unFollow, {
     onSuccess: () => {
-      handleUpdateFollowing("follow");
-      activateSnackBar(`You are now following ${profile.name}`, "success");
+      handleUpdateFollowing("unfollow");
+      activateSnackBar(`You are no longer following ${profile.name}`, "success")
     },
     onError: () => {
       activateSnackBar("Something went wrong", "error");
     }
   });
 
-  const handleFollow = () => {
+  const handleUnFollow = () => {
     mutate();
   };
 
@@ -34,8 +34,8 @@ const FollowOnProfilePage = ({ profile, handleUpdateFollowing }) => {
     <>
       {theme.palette.mode === "dark"
         ?
-        <LoadingButton loading={isLoading} size="small" onClick={handleFollow} variant="outlined" color="secondary">
-          Follow
+        <LoadingButton loading={isLoading} size="small" onClick={handleUnFollow} variant="outlined" color="secondary">
+          Un follow
         </LoadingButton>
         :
         <LoadingButton
@@ -46,13 +46,14 @@ const FollowOnProfilePage = ({ profile, handleUpdateFollowing }) => {
           loading={isLoading}
           size="small"
           variant="outlined"
-          onClick={handleFollow}
+          onClick={handleUnFollow}
         >
-          Follow
+          Un follow
         </LoadingButton>
       }
+
     </>
   );
 }
 
-export default FollowOnProfilePage;
+export default UnFollowOnProfilePage;

@@ -1,76 +1,90 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Box, CircularProgress, Stack, Typography } from "@mui/material";
-// import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/authContext";
 import { useParams } from 'react-router-dom';
 import url from "../../common/url";
 import ProfileMedia from "../../components/profile/ProfileMedia";
-import { useAxiosHook } from "../../hooks/useAxiosHook";
+import useAxios from "../../hooks/useAxios";
 import UsersProfilePosts from "../../components/profile/UsersProfilesPosts";
 import ErrorAlert from "../../components/alert/ErrorAlert";
+import FollowOnProfilePage from "../../components/profile/FollowOnProfilePage";
+import UnFollowOnProfilePage from "../../components/profile/UnFollowOnProfilePage";
 
 const UsersProfile = () => {
-  // const { user } = useAuth();
+
+  const { user, updateUser } = useAuth();
   const { name } = useParams();
-  const { response, error, loading, cancel, fetchData } = useAxiosHook();
-  console.log(name);
-
-  const [userProfile, setUserProfile] = useState([]);
+  const axios = useAxios();
+  const [userProfile, setUserProfile] = useState(null);
   const [profileMedia, setProfileMedia] = useState([]);
-  const [nameOfUser, setNameOfUser] = useState(name);
+  const [isFollowing, setIsFollowing] = useState(null);
 
-  // const handleFollow = () => {
-  //   console.log(user.following);
-  // }
+  const handleUpdateFollowing = (action) => {
+
+    if (action === "follow") {
+      const updatedUser = { ...user, following: [...user.following, { name: userProfile.name, avatar: userProfile.avatar }] };
+      updateUser(updatedUser);
+      setIsFollowing(true);
+    }
+    else if (action === "unfollow") {
+      const updatedUser = { ...user, following: user.following.filter(following => following.name !== userProfile.name) };
+      updateUser(updatedUser);
+      setIsFollowing(false);
+    }
+  }
+
+  const handelSetFollowing = () => {
+    const isFollowing = user.following.find(following => following.name === userProfile.name);
+    isFollowing === undefined ? setIsFollowing(false) : setIsFollowing(true);
+    console.log(isFollowing);
+  }
 
   useEffect(() => {
-    let mounted = true;
-
-    if (mounted) {
-      fetchData({
-        method: "GET",
-        url: url.profiles.profile(name),
-      });
-      setNameOfUser(name)
+    let isMounted = true;
+    if (isMounted && userProfile !== null) {
+      handelSetFollowing();
     }
-
-    return () => {
-      mounted = false;
-      cancel();
-    }
-
+    return () => { isMounted = false; }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name]);
+  }, [userProfile]);
 
-  useEffect(() => {
-    let mounted = true;
+  const fetchUsersProfile = async () => {
+    const { data } = await axios.get(url.profiles.profile(name));
+    return data;
+  }
 
-    if (mounted && response.name) {
-      setUserProfile(response);
-      console.log(response);
+  const { isError, isLoading } = useQuery(["usersProfile", { name }], fetchUsersProfile, {
+    onSuccess: (data) => {
+      setUserProfile(data);
       setProfileMedia({
-        banner: response.banner,
-        avatar: response.avatar
+        banner: data.banner,
+        avatar: data.avatar
       });
-    }
+    },
+  });
 
-    return () => {
-      mounted = false;
-    }
+  if (isLoading) {
+    return (
+      <Stack width="100%" justifyContent="center" alignItems="center">
+        <CircularProgress />
+      </Stack>
+    )
+  }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response]);
+  if (isError) {
+    return <ErrorAlert />
+  }
 
   return (
     <>
-      {error && <ErrorAlert />}
-      {loading && <CircularProgress />}
-      {userProfile.name === name && (
+      {userProfile !== null && (
         <div>
           <ProfileMedia name={userProfile.name} media={profileMedia} />
           <Stack direction="row" px={2} alignItems="center" justifyContent="space-between">
             <Stack mt={6}>
               <Typography variant="h5" fontWeight="bold" component="h1">
-                {userProfile.name.replaceAll("_", " ")}
+                {userProfile.name}
               </Typography>
               <Stack direction="row" alignItems="center" spacing={1}>
                 <Stack direction="row" alignItems="center" spacing="5px">
@@ -99,11 +113,14 @@ const UsersProfile = () => {
                 </Stack>
               </Stack>
             </Stack>
+            {!isFollowing ?
+              <FollowOnProfilePage profile={userProfile} handleUpdateFollowing={handleUpdateFollowing} />
+              : <UnFollowOnProfilePage profile={userProfile} handleUpdateFollowing={handleUpdateFollowing} />}
           </Stack>
         </div>
       )}
       <Box mt={2}>
-        <UsersProfilePosts name={nameOfUser} />
+        <UsersProfilePosts name={name} />
       </Box>
     </>
   );

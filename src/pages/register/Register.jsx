@@ -1,15 +1,15 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAxiosHook } from "../../hooks/useAxiosHook";
 import { Box, TextField, Alert, Typography, Divider, Stack } from "@mui/material"
 import { LoadingButton } from "@mui/lab";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAxiosHook } from "../../hooks/useAxiosHook";
 import url from '../../common/url';
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/system";
-import { useNavigate } from "react-router-dom";
-import Logo from "../../components/Logo";
+import Logo from "../../components/Logo"
 
 const schema = yup.object().shape({
   name: yup.string().required("This field is required").matches(/^[a-zA-Z0-9_ ]+$/, "The name value must not contain punctuation symbols apart from underscore (_)"),
@@ -19,12 +19,12 @@ const schema = yup.object().shape({
 
 const Register = () => {
 
+  const { response, error, loading, fetchData } = useAxiosHook();
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
   const redirect = useNavigate();
   const theme = useTheme();
-  const { response, error, loading, fetchData } = useAxiosHook();
 
   const onSubmit = async (data) => {
     fetchData({
@@ -111,21 +111,26 @@ const Register = () => {
         <LoadingButton type="submit" loading={loading} variant="contained" color="primary">
           Register
         </LoadingButton>
-        {error && error[0].message === "Profile already exists" &&
+        {error && error[0].message === "Profile already exists" && (
           <Alert severity="error">
             <Stack direction="row" spacing={2}>
-              <Typography variant="body2">
+              <Typography variant="body2" color={errContrastText}>
                 {error[0].message}
               </Typography>
-              <Link style={{ color: errContrastText }} to="/signin">Sign in here</Link>
+              <Link to="/signIn">
+                <Typography variant="body2" color={errContrastText}>
+                  Sign in
+                </Typography>
+              </Link>
             </Stack>
-          </Alert>}
+          </Alert>)
+        }
         <Divider>Or</Divider>
         <Stack direction="row" justifyContent="center" spacing={1}>
           <Typography variant="body2">
             Already have an account?
           </Typography>
-          <Link to="/signin" style={{ color: theme.palette.primary.main, textDecoration: "none" }}>
+          <Link to="/signIn" style={{ color: theme.palette.primary.main, textDecoration: "none" }}>
             <Typography variant="body2">
               Sign in here
             </Typography>

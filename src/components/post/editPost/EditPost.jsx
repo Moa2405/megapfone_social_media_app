@@ -29,8 +29,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import ErrorAlert from "../../alert/ErrorAlert";
 
 const schema = yup.object().shape({
-  title: yup.string().required("This field is required").max(30, "Title must be less than 30 characters"),
-  body: yup.string(),
+  title: yup.string().required("This field is required").max(280, "Title must be less than 280 characters"),
+  body: yup.string().max(280, "Title must be less than 280 characters"),
   media: yup.string().url("Must be a valid url").matches(/^$|^https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|bmp|tiff|tif|svg|svgz)(?:\?.*)?$/, "Must be a valid image url"),
 });
 

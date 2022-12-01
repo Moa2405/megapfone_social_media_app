@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import useAxios from "../../hooks/useAxios";
 import { Box, Stack, Typography } from "@mui/material";
 import { useAuth } from "../../context/authContext";
 import url from "../../common/url";
@@ -6,14 +8,13 @@ import { useTheme } from "@mui/system";
 import EditProfile from "../../components/profile/editProfile";
 import Posts from "../../components/post/posts/Posts";
 import ProfileMedia from "../../components/profile/ProfileMedia";
-import { useAxiosHook } from "../../hooks/useAxiosHook";
 import ErrorAlert from "../../components/alert/ErrorAlert";
 import PostSkeleton from "../../components/post/posts/PostsSkeletons";
-import { usePostsContext } from "../../context/postContext"
+import { usePostsContext } from "../../context/postContext";
 
 const MeProfile = () => {
 
-  const { response, error, loading, cancel, fetchData } = useAxiosHook();
+  const axios = useAxios();
   const { postsInContext, setInitialPosts } = usePostsContext()
   const { user } = useAuth();
   const theme = useTheme();
@@ -21,38 +22,18 @@ const MeProfile = () => {
     banner: user.banner,
     avatar: user.avatar,
   });
-  console.log(user);
   const urlApi = url.posts.postsByAuthor(user.name);
 
-  useEffect(() => {
-    let mounted = true;
+  const fetchProfile = async () => {
+    const { data } = await axios.get(urlApi);
+    return data;
+  }
 
-    if (mounted) {
-      fetchData({
-        method: "GET",
-        url: urlApi,
-      });
-    }
-
-    return () => {
-      clearInterval(fetchData);
-      cancel();
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    let mounted = true;
-
-    if (mounted) {
-      setInitialPosts(i => i = response);
-    }
-
-    return () => mounted = false;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response]);
+  const { data, isError, isLoading } = useQuery("myProfile", fetchProfile, {
+    onSuccess: (data) => {
+      setInitialPosts(data)
+    },
+  });
 
   const mutedTextColor = theme.palette.mode === "dark" ? theme.palette.grey[500] : theme.palette.grey[600]
   const userName = user.name.replaceAll("_", " ");
@@ -89,9 +70,9 @@ const MeProfile = () => {
           <EditProfile setProfileImages={setProfileImages} />
         </Stack>
         <Box sx={{ mt: 4 }}>
-          {loading && <PostSkeleton />}
-          {error && <ErrorAlert />}
-          {!loading && !error && <Posts posts={postsInContext} />}
+          {isLoading && <PostSkeleton />}
+          {isError && <ErrorAlert />}
+          {data && <Posts posts={postsInContext} />}
         </Box>
       </Box>
     </>

@@ -1,46 +1,49 @@
-import { useEffect } from "react";
 import url from "../../../common/url";
-import { useAxiosHook } from "../../../hooks/useAxiosHook";
 import ErrorAlert from "../../alert/ErrorAlert";
 import Posts from "./Posts";
 import PostSkeleton from "./PostsSkeletons";
+import useAxios from "../../../hooks/useAxios"
+import InfiniteScroll from "react-infinite-scroller";
+import { useInfiniteQuery } from "react-query";
 
 const PostFeed = () => {
 
-  const { response, error, loading, cancel, fetchData } = useAxiosHook();
-  const apiUrl = url.posts.allPostsLimitFifty;
+  const apiUrl = url.posts.postsInfiniteScroll;
+  const axios = useAxios();
 
-  useEffect(() => {
-    let mounted = true;
-    console.log("post feed mounted");
+  const fetchPosts = async ({ pageParam = 0 }) => {
+    const results = await axios.get(apiUrl + pageParam);
+    return { results, nextPage: pageParam + 20, totalPages: 100 };
+  }
 
-    if (mounted) {
-      fetchData({
-        method: "GET",
-        url: apiUrl,
-      });
+  const { data, isLoading, isError, hasNextPage, fetchNextPage } = useInfiniteQuery("posts", fetchPosts, {
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.nextPage < lastPage.totalPages) return lastPage.nextPage;
+      return undefined;
+    },
+    onSuccess: (data) => {
+      console.log(data);
     }
 
-    return () => {
-      console.log("post feed unmounted");
-      mounted = false;
-      cancel();
-    }
+  });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // const { data, isError, isLoading } = useQuery("postsFeed", fetchPosts)
 
-  if (loading) {
+  if (isLoading) {
     return <PostSkeleton />
   }
 
-  if (error) {
+  if (isError) {
     return <ErrorAlert />
   }
 
   return (
     <>
-      <Posts posts={response} />
+      <InfiniteScroll hasMore={hasNextPage} loadMore={fetchNextPage}>
+        {data.pages.map((page, index) =>
+          <Posts key={index} posts={page.results.data} />
+        )}
+      </InfiniteScroll>
     </>
   );
 

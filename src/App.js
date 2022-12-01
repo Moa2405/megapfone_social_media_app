@@ -12,7 +12,6 @@ import SinglePostOutlet from './pages/post/SinglePostOutlet';
 import SignInRegisterLayout from './components/layout/signInRegisterLayout/SignInRegisterLayout';
 import { SnackBarProvider } from './context/snackBarContext';
 import { PostsProvider } from './context/postContext';
-
 import FourOFour from './pages/404/404';
 
 const App = () => {

@@ -5,7 +5,7 @@ import { useAuth } from "../../../context/authContext";
 import { Box, Grid } from "@mui/material";
 import LeftSidebar from "../../navigation/LeftSidebar";
 import RightSidebar from "./rightSideBar/RightSidebar";
-import NavbarStickyBottom from "../../navigation/NavbarStickyBottom";
+import NavbarStickyBottom from "../../navigation/NavbarStickyBottom"
 
 const Layout = () => {
 
