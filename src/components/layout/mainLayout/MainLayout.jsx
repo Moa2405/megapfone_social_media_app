@@ -32,7 +32,7 @@ const Layout = () => {
           <Grid item xs={2} md={3} sx={{ display: { xxs: "none", xs: "block" } }}>
             <LeftSidebar />
           </Grid>
-          <Grid item xxs={12} xs={10} sm={8} md={6}>
+          <Grid item xxs={12} xs={10} sm={8} md="60px">
             {/* main content */}
             <Box sx={{ px: { xxs: "0", xs: "17px" } }} component="main">
               <Outlet />

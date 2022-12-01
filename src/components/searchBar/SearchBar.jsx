@@ -7,14 +7,15 @@ import { useMutation } from "react-query";
 import url from "../../common/url";
 import { useState, useRef } from "react";
 import { stringAvatar } from "../../utils/avatarPlaceHolder";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import ErrorAlert from "../alert/ErrorAlert";
 
 const SearchBar = () => {
 
   const axios = useAxios();
   const [openModal, setOpenModal] = useState(false);
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [profiles, setProfiles] = useState(null);
   const searchRef = useRef();
 
   const fetchUsers = async () => {
@@ -24,7 +25,7 @@ const SearchBar = () => {
 
   const { data, isLoading, isError, mutate } = useMutation(fetchUsers, {
     onSuccess: (data) => {
-      setSearchResults(data);
+      setProfiles(data);
       console.log(data);
     }
   });
@@ -61,14 +62,12 @@ const SearchBar = () => {
     if (searchRef.current.value.length === 0) {
       setSearchResults([]);
     } else {
-      const searchProfiles = data.filter((user) => {
+      const searchProfiles = profiles.filter((user) => {
         return user.name.toLowerCase().includes(searchRef.current.value.toLowerCase());
       })
       setSearchResults(searchProfiles);
     }
   }
-
-  console.log(searchResults);
 
   return (
     <>
