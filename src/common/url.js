@@ -2,7 +2,6 @@ const url = {
   auth: {
     login: "/api/v1/social/auth/login",
     register: "/api/v1/social/auth/register",
-
   },
   posts: {
     createPost: "/api/v1/social/posts?_author=true&_comments=true&_reactions=true",

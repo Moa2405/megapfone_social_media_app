@@ -43,7 +43,7 @@ const MeProfile = () => {
       {/* banner and avatar */}
       <ProfileMedia name={user.name} media={profileImages} />
       <Box>
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack direction="row" sx={{ px: { xxs: 2, xs: 0 } }} alignItems="center" justifyContent="space-between">
           <Stack mt={6}>
             <Typography variant="h5" fontWeight="bold" component="h1">
               {userName}

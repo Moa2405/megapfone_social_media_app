@@ -7,6 +7,7 @@ import url from '../../../common/url';
 import { useTheme } from '@mui/system';
 
 const ReactToPost = ({ postId, reactions }) => {
+  console.log(reactions);
 
   const theme = useTheme()
   const [anchorEl, setAnchorEl] = useState(null);
