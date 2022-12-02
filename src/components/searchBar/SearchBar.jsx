@@ -127,7 +127,7 @@ const SearchBar = () => {
                   ),
                 }}
               />
-              <Stack spacing={2} sx={{ overflowY: "scroll", maxHeight: "600px" }}>
+              <Stack spacing={2} sx={{ overflowY: "scroll", paddingBottom: { xxs: "70vh", md: "0" }, maxHeight: "600px" }}>
                 {searchResults.map((user) => (
                   <Link key={user.name} to={`/user/${user.name}`} onClick={handleCloseSearchModal} style={{ textDecoration: "none", color: "inherit" }}>
                     <Stack key={user.name} direction="row" alignItems="center" spacing={2}>
