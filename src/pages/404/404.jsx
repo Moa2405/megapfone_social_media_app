@@ -1,4 +1,4 @@
-import { Typography, Stack, IconButton } from "@mui/material";
+import { Typography, Stack, IconButton, Box } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -14,7 +14,7 @@ const FourOFour = () => {
 
   return (
 
-    <Stack align="center" sx={{ px: "17px", margin: "4rem auto", maxWidth: "700px" }} spacing={2} alignItems="center">
+    <Stack align="center" sx={{ px: "17px", margin: "4rem auto", height: "100vh", maxWidth: "700px" }} spacing={2} alignItems="center">
       <Logo />
       <Typography variant="h1" sx={{ color: mutedText }} fontWeight="bold" component="h1">
         404
@@ -22,9 +22,11 @@ const FourOFour = () => {
       <Typography variant="h5" fontWeight="bold" component="h2">
         Page not found
       </Typography>
-      <Typography variant="body1" color="textSecondary" component="p">
-        The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
-      </Typography>
+      <Box sx={{ maxWidth: 450 }}>
+        <Typography variant="body1" color="textSecondary" component="p">
+          The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+        </Typography>
+      </Box>
       <Stack direction="column" spacing={1}>
         <Stack direction="row" spacing={2} alignItems="center">
           <Typography variant="body1" color="textSecondary" component="p">

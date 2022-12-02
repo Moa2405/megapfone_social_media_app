@@ -83,6 +83,7 @@ const SearchBar = () => {
         </Button>
       </Hidden>
       <Modal
+        sx={{ overflowY: "scroll", mx: "1rem" }}
         open={openModal}
         onClose={handleCloseSearchModal}
         aria-labelledby="Search"
