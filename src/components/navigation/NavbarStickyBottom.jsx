@@ -73,7 +73,7 @@ const NavbarStickyBottom = () => {
               horizontal: 'right',
             }}
             open={Boolean(anchorEl)}
-          // onClose={handleClose}
+            onClose={handleClose}
           >
             {theme.palette.mode === "dark" ? (
               <MenuItem onClick={handleTheme}>
