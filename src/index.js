@@ -34,7 +34,7 @@ root.render(
           <Root />
         </ThemeContextProvider>
       </BrowserRouter>
-      <ReactQueryDevtoolsPanel />
+      <ReactQueryDevtoolsPanel style={{ zIndex: "3000" }} />
     </QueryClientProvider>
   </React.StrictMode>
 );

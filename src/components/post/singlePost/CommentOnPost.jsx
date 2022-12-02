@@ -1,30 +1,34 @@
 import { useRef, useState } from "react";
-import { Box, InputAdornment, TextField } from "@mui/material";
+import { Box, Button, InputAdornment, TextField } from "@mui/material";
 import url from "../../../common/url";
-import { LoadingButton } from "@mui/lab";
 import { useSnackBar } from "../../../context/snackBarContext";
 import useAxios from "../../../hooks/useAxios";
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
-const CommentOnPost = ({ postId, handleCommentState }) => {
+const CommentOnPost = ({ postId }) => {
 
+  const queryClient = useQueryClient();
   const { activateSnackBar } = useSnackBar();
   const commentRef = useRef();
   const [disabled, setDisabled] = useState(true);
   const axios = useAxios();
 
-  const postComment = async () => {
-    const { data } = await axios.post(url.posts.comment(postId), { body: commentRef.current.value });
+  const postComment = async (comment) => {
+    const { data } = await axios.post(url.posts.comment(postId), comment);
     return data;
   }
 
-  const { isLoading, mutate } = useMutation(postComment, {
-    onSuccess: (data) => {
-      handleCommentState(data);
+  const { mutate } = useMutation(postComment, {
+    onSuccess: data => {
+      const privPost = queryClient.getQueryData("singlePost");
+      //add data to the privPost.comments array
+      queryClient.setQueryData("singlePost", {
+        ...privPost,
+        comments: [data, ...privPost.comments]
+      });
+      activateSnackBar("Comment posted successfully", "success");
       commentRef.current.value = "";
-      console.log(data);
       setDisabled(true);
-      activateSnackBar("Comment added successfully", "success");
     },
     onError: () => {
       activateSnackBar("Something went wrong", "error");
@@ -36,7 +40,7 @@ const CommentOnPost = ({ postId, handleCommentState }) => {
   }
 
   const handleComment = () => {
-    mutate();
+    mutate({ body: commentRef.current.value });
   }
 
   return (
@@ -55,15 +59,14 @@ const CommentOnPost = ({ postId, handleCommentState }) => {
             disableUnderline: true,
             endAdornment: (
               <InputAdornment position="end">
-                <LoadingButton
-                  loading={isLoading}
+                <Button
                   disabled={disabled}
                   onClick={handleComment}
                   sx={{ marginBottom: "16px" }}
                   variant="text"
                 >
                   Post
-                </LoadingButton>
+                </Button>
               </InputAdornment>
             )
           }}

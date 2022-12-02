@@ -1,13 +1,13 @@
 import { useRef, useState } from "react";
 import useAxios from "../../../hooks/useAxios";
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useSnackBar } from "../../../context/snackBarContext";
 import url from "../../../common/url";
-import { Box, InputAdornment, TextField } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import { Box, InputAdornment, TextField, Button } from "@mui/material"
 
-const ReplyToComment = ({ postId, commentId, handleReplyState }) => {
+const ReplyToComment = ({ postId, commentId }) => {
 
+  const queryClient = useQueryClient();
   const { activateSnackBar } = useSnackBar();
   const commentRef = useRef();
   const [disabled, setDisabled] = useState(true);
@@ -18,13 +18,18 @@ const ReplyToComment = ({ postId, commentId, handleReplyState }) => {
     return response;
   }
 
-  const { isLoading, mutate } = useMutation(postComment, {
-    onSuccess: (data) => {
-      handleReplyState(data);
+  const { mutate } = useMutation(postComment, {
+    onSuccess: data => {
+      const privPost = queryClient.getQueryData("singlePost");
+
+      queryClient.setQueryData("singlePost", {
+        ...privPost,
+        comments: [data, ...privPost.comments]
+      });
       activateSnackBar("Reply posted successfully", "success");
-      console.log(data);
       commentRef.current.value = "";
       setDisabled(true);
+
     },
     onError: () => {
       activateSnackBar("Something went wrong", "error");
@@ -51,8 +56,7 @@ const ReplyToComment = ({ postId, commentId, handleReplyState }) => {
             disableUnderline: true,
             endAdornment: (
               <InputAdornment position="end">
-                <LoadingButton
-                  loading={isLoading}
+                <Button
                   disabled={disabled}
                   onClick={() => {
                     mutate({ body: commentRef.current.value, replyToId: commentId })
@@ -61,7 +65,7 @@ const ReplyToComment = ({ postId, commentId, handleReplyState }) => {
                   variant="text"
                 >
                   Post
-                </LoadingButton>
+                </Button>
               </InputAdornment>
             ),
           }}

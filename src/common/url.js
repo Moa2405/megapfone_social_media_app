@@ -10,7 +10,7 @@ const url = {
     getPostsByFollowing: `/api/v1/social/posts/following?_author=true&_comments=true&_reactions=true`,
     postsByAuthor: (author) => `/api/v1/social/profiles/${author}/posts?_author=true&_comments=true&_reactions=true`,
     reactToPost: (id, symbol) => `/api/v1/social/posts/${id}/react/${symbol}`,
-    comment: (id) => `/api/v1/social/posts/${id}/comment`,
+    comment: (id) => `/api/v1/social/posts/${id}/comment?_author=true`,
     deletePost: (id) => `/api/v1/social/posts/${id}`,
     editPost: (id) => `/api/v1/social/posts/${id}?_author=true&_comments=true&_reactions=true`,
   },

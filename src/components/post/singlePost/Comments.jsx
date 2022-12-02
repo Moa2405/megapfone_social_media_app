@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useQueryClient } from "react-query";
 import { TransitionGroup } from "react-transition-group";
 import ReplyToComment from "./ReplayToComment";
 import { formatDistance } from "../../../utils/formatData";
@@ -6,18 +7,18 @@ import { useTheme } from '@mui/system';
 import { Box, Collapse, Divider, Paper, Typography, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 
-const Comments = ({ comments, handleReplyState }) => {
+const Comments = () => {
 
-  const [commentsState, setCommentsState] = useState(null);
+  const queryClient = useQueryClient();
   const theme = useTheme();
-  const replyDividerColor = theme.palette.mode === "dark" ? "#FFFFFF" : "#000000";
+  const [commentsState, setCommentsState] = useState([]);
 
-  //making a new array of comments, adding an array of replies to each comment
+  const comments = queryClient.getQueryData("singlePost").comments;
+  const replyDividerColor = theme.palette.mode === "dark" ? "#FFFFFF" : "#000000";
 
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-
       const commentsWithReply = comments.filter(comment => comment.replyToId === null);
       const replies = comments.filter(comment => comment.replyToId !== null);
       commentsWithReply.forEach(comment => {
@@ -30,14 +31,6 @@ const Comments = ({ comments, handleReplyState }) => {
       mounted = false;
     }
   }, [comments]);
-
-  if (comments.length === 0) {
-    return (
-      <Paper sx={{ p: 1 }} variant="body1">
-        <Typography variant="body1">No comments yet</Typography>
-      </Paper>
-    )
-  }
 
   return (
     <Stack spacing={3} sx={{ paddingTop: "50px" }}>
@@ -81,7 +74,7 @@ const Comments = ({ comments, handleReplyState }) => {
                   </Collapse>
                 ))}
               </TransitionGroup>
-              <ReplyToComment postId={comment.postId} handleReplyState={handleReplyState} commentId={comment.id} />
+              <ReplyToComment postId={comment.postId} commentId={comment.id} />
             </Paper>
           </Collapse>
         ))}
