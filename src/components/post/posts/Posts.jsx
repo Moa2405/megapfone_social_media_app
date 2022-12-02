@@ -33,7 +33,7 @@ const Posts = ({ posts }) => {
                   {/* I need the posts state to the delete option */}
                   <PostOptionBtn post={post} />
                 </Stack>
-                <Stack spacing={1} width="100%" px={2} pb={1}>
+                <Stack spacing={1} width="100%" px={2}>
                   {/* post title */}
                   <Link style={{ color: "inherit", textDecoration: "none" }} to={`/post/${post.id}`}>
                     <Stack spacing={1}>

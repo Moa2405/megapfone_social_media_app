@@ -25,7 +25,11 @@ const PostsByFollowing = () => {
   }
 
   if (!isLoading && !isError && data.length === 0) {
-    return <Typography>Start fallowing interesting people</Typography>
+    return (
+      <Box sx={{ px: { xxs: "17px", xs: "0px" } }}>
+        <Typography>Start fallowing interesting people</Typography>
+      </Box>
+    )
   }
 
   return (

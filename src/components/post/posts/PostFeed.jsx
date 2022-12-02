@@ -21,13 +21,7 @@ const PostFeed = () => {
       if (lastPage.nextPage < lastPage.totalPages) return lastPage.nextPage;
       return undefined;
     },
-    onSuccess: (data) => {
-      console.log(data);
-    }
-
   });
-
-  // const { data, isError, isLoading } = useQuery("postsFeed", fetchPosts)
 
   if (isLoading) {
     return <PostSkeleton />

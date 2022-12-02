@@ -1,15 +1,17 @@
 import EmojiPicker from 'emoji-picker-react';
 import { useState } from 'react';
-import { Chip, Grid, IconButton, Popper, Stack } from "@mui/material";
-import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined'
 import useAxios from '../../../hooks/useAxios';
+import { useMutation } from 'react-query';
 import url from '../../../common/url';
 import { useTheme } from '@mui/system';
+import { useSnackBar } from '../../../context/snackBarContext';
+import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined'
+import { Chip, Grid, IconButton, Popper, Stack } from "@mui/material";
 
 const ReactToPost = ({ postId, reactions }) => {
-  console.log(reactions);
 
   const theme = useTheme()
+  const { activateSnackBar } = useSnackBar();
   const [anchorEl, setAnchorEl] = useState(null);
   const [reactionsArray, setReactionsArray] = useState(reactions);
   const axios = useAxios();
@@ -18,41 +20,47 @@ const ReactToPost = ({ postId, reactions }) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
-  const handleReact = async (emojiObject, index) => {
-    console.log(emojiObject);
-    const res = await axios.put(url.posts.reactToPost(postId, emojiObject.symbol));
-    if (res.status === 200) {
-      const newReactionsArray = [...reactionsArray];
-      newReactionsArray[index].count++;
-      setReactionsArray(newReactionsArray);
-    }
-    console.log(reactionsArray);
-  }
+  const mutationOnChipClick = useMutation((emojiObject) =>
+    axios.put(url.posts.reactToPost(postId, emojiObject.symbol))
+  );
 
-  const handleSelectedEmoji = async (emojiObject, event) => {
-    console.log(emojiObject);
+  const mutationOnEmojiPicker = useMutation((emojiObject) =>
+    axios.put(url.posts.reactToPost(postId, emojiObject.emoji))
+  );
 
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-
-    const res = await axios.put(url.posts.reactToPost(postId, emojiObject.emoji));
-    console.log(res);
-
-    if (res.status === 200) {
-
-      const doseTheEmojiExists = reactionsArray.find(reaction => reaction.symbol === emojiObject.emoji);
-
-      if (doseTheEmojiExists) {
-        console.log('emoji exists');
-        const index = reactionsArray.findIndex(reaction => reaction.symbol === emojiObject.emoji);
+  const handleReactOnChip = async (emojiObject, index) => {
+    mutationOnChipClick.mutate(emojiObject, {
+      onSuccess: () => {
         const newReactionsArray = [...reactionsArray];
         newReactionsArray[index].count++;
         setReactionsArray(newReactionsArray);
+      },
+      onError: () => {
+        activateSnackBar("Something went wrong", "error");
       }
-      else {
-        console.log('emoji does not exist');
-        setReactionsArray([...reactionsArray, res.data]);
+    });
+  }
+
+  const handleReactOnPicker = async (emojiObject, event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    mutationOnEmojiPicker.mutate(emojiObject, {
+      onSuccess: (data) => {
+        const doseTheEmojiExists = reactionsArray.find(reaction => reaction.symbol === data.data.symbol);
+        if (doseTheEmojiExists) {
+          console.log('emoji exists');
+          const index = reactionsArray.findIndex(reaction => reaction.symbol === data.data.symbol);
+          const newReactionsArray = [...reactionsArray];
+          newReactionsArray[index].count++;
+          setReactionsArray(newReactionsArray);
+        }
+        else {
+          setReactionsArray([...reactionsArray, data.data]);
+        }
+      },
+      onError: () => {
+        activateSnackBar("Something went wrong", "error");
       }
-    }
+    });
   }
 
   const open = Boolean(anchorEl);
@@ -61,9 +69,9 @@ const ReactToPost = ({ postId, reactions }) => {
   return (
     <>
       <Popper sx={{ zIndex: "1000" }} id={id} open={open} anchorEl={anchorEl} placement="top-start">
-        <EmojiPicker width={250} lazyLoadEmojis={true} onEmojiClick={handleSelectedEmoji} theme="dark" />
+        <EmojiPicker width={250} lazyLoadEmojis={true} onEmojiClick={handleReactOnPicker} theme="dark" />
       </Popper>
-      <Stack direction="row" alignItems="center" spacing={2} px={2} py={1}>
+      <Stack direction="row" alignItems="center" spacing={2} pr={2} pl={1} py={1}>
         <IconButton aria-label="React with emoji" onClick={handleClick}>
           <AddReactionOutlinedIcon
             fontSize="lg"
@@ -77,7 +85,7 @@ const ReactToPost = ({ postId, reactions }) => {
               size="small"
               variant="outlined"
               onClick={() =>
-                handleReact(reaction, index)}
+                handleReactOnChip(reaction, index)}
               label={reaction.symbol + " " + reaction.count}
               sx={{
                 fontSize: "1em",

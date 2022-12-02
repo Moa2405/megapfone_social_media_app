@@ -26,7 +26,6 @@ const SearchBar = () => {
   const { data, isLoading, isError, mutate } = useMutation(fetchUsers, {
     onSuccess: (data) => {
       setProfiles(data);
-      console.log(data);
     }
   });
 

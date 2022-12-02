@@ -31,6 +31,12 @@ export const light = {
       dark: "#DD4C66",
       contrastText: "#000000",
     },
+    secondaryLightTheme: {
+      main: "#000000",
+      light: "#000000",
+      dark: "#000000",
+      contrastText: "#FFFFFF",
+    },
     background: {
       paper: "#DEDEDE",
       default: "#DEDEDE",

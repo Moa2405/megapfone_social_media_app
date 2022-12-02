@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Stack } from "@mui/material";
 import SearchBar from "../../../searchBar/SearchBar";
 import PeopleYouFollow from "../../../peopleYouFollow/PeopleYouFollow";
+import PeopleToFollow from "../../../peopleToFollow/PeopleToFollow";
 
 const RightSidebar = () => {
   return (
@@ -9,6 +10,7 @@ const RightSidebar = () => {
       <Stack spacing={1}>
         <SearchBar />
         <PeopleYouFollow />
+        <PeopleToFollow />
       </Stack>
     </Box>
   );
