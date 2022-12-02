@@ -10,7 +10,7 @@ const Home = () => {
     <>
       <Stack spacing={4} >
         <Box sx={{ px: { xxs: "17px", xs: "0px" } }}>
-          <Typography component="h1" variant="h3">
+          <Typography component="h1" variant="h4">
             Home
           </Typography>
         </Box>

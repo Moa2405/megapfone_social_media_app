@@ -140,9 +140,11 @@ const PeopleToFollow = () => {
                         <Avatar {...stringAvatar} sx={{ height: 48, width: 48 }} /> :
                         <Avatar src={profile.avatar} sx={{ height: 48, width: 48 }} />
                       }
-                      <Typography noWrap>
-                        {profile.name}
-                      </Typography>
+                      <Box width="100%">
+                        <Typography noWrap={true} align="center">
+                          {profile.name}
+                        </Typography>
+                      </Box>
                     </Stack>
                   </Link>
                   <Button
