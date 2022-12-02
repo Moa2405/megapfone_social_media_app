@@ -144,6 +144,7 @@ const EditProfile = ({ setProfileImages }) => {
         </Button>)
       }
       <Modal
+        sx={{ overflowY: "scroll", mx: "1rem" }}
         open={openModal}
         onClose={handleCloseEditProfileModal}
         aria-labelledby="Edit-profile"

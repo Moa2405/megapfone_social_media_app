@@ -132,6 +132,7 @@ const EditPost = ({ post, closeMenu }) => {
         <Typography variant="body1" component="p">Edit</Typography>
       </MenuItem>
       <Modal
+        sx={{ overflowY: "scroll", mx: "1rem" }}
         open={openModal}
         onClose={handleCloseEditModal}
         aria-labelledby="Edit Post"

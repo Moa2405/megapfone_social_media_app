@@ -36,17 +36,12 @@ const CreatePost = () => {
 
   // a reference to the tag input field
   const inputRefTags = useRef(null);
-
   const [tags, setTags] = useState([]);
-
   // state for the modal
   const [openModal, setOpenModal] = useState(false);
-
   //create-post-btn disabled state
   const [disabledBtn, setDisabledBtn] = useState(true);
-
   const { response, loading, error, fetchData } = useAxiosHook();
-
   const { addPost } = usePostsContext();
   const { activateSnackBar } = useSnackBar();
   const theme = useTheme();
@@ -174,6 +169,7 @@ const CreatePost = () => {
         Post
       </Button>
       <Modal
+        sx={{ overflowY: "scroll", mx: "1rem" }}
         open={openModal}
         onClose={handleClosePostModal}
         aria-labelledby="Create Post"
