@@ -16,7 +16,6 @@ const Comments = () => {
 
   const queryClient = useQueryClient();
   const [commentsState, setCommentsState] = useState([]);
-
   const comments = queryClient.getQueryData("singlePost").comments;
 
   useEffect(() => {
@@ -46,7 +45,7 @@ const Comments = () => {
                 [`& .${timelineItemClasses.root}:before`]: {
                   flex: 0,
                   padding: 0,
-                },
+                }, padding: 0
               }}
               >
                 <TimelineItem>
@@ -54,12 +53,14 @@ const Comments = () => {
                     <TimelineDot />
                     <TimelineConnector />
                   </TimelineSeparator>
-                  <TimelineContent>
-                    <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 1 }}>
+                  <TimelineContent pl={0}>
+                    <Stack direction="row" alignItems="center" justifyContent="space-between">
                       <Stack direction="column">
                         <Stack spacing={1} direction="row" alignItems="center">
                           <Link to={`/user/${comment.owner}`} style={{ textDecoration: "none" }}>
-                            <Typography color="primary" variant="body2">{comment.owner.replace("_", " ")}</Typography>
+                            <Typography color="primary" variant="body2" fontWeight="bold">
+                              {comment.owner.replace("_", " ")}
+                            </Typography>
                           </Link>
                           <Typography color="textSecondary" variant="body2">{formatDistance(comment.created)}</Typography>
                         </Stack>
@@ -79,10 +80,12 @@ const Comments = () => {
                       <TimelineConnector />
                     </TimelineSeparator>
                     <TimelineContent>
-                      <Stack direction="column" sx={{ borderRadius: "0.25rem", p: 1 }}>
+                      <Stack direction="column" sx={{ borderRadius: "0.25rem" }}>
                         <Stack spacing={1} direction="row" alignItems="center">
                           <Link to={`/user/${reply.owner}`} style={{ textDecoration: "none" }}>
-                            <Typography color="primary" variant="body2" fontWeight="bold" component="p">{reply.owner.replace("_", " ")}</Typography>
+                            <Typography color="primary" variant="body2" fontWeight="bold" component="p">
+                              {reply.owner.replace("_", " ")}
+                            </Typography>
                           </Link>
                           <Typography color="textSecondary" variant="body2">{`Replied ${formatDistance(reply.created)}`}</Typography>
                         </Stack>
