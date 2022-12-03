@@ -148,8 +148,8 @@ const CreatePost = () => {
   return (
     <>
       <Avatar onClick={handleOpenPostModal}
-        sx={{ cursor: "pointer", bgcolor: theme.palette.primary.main, [theme.breakpoints.up("md")]: { display: "none" } }}>
-        <img src="/logo-black.svg" alt="Create a post" height="20" style={{ color: "#000" }} />
+        sx={{ height: 30, width: 30, cursor: "pointer", bgcolor: theme.palette.primary.main, [theme.breakpoints.up("md")]: { display: "none" } }}>
+        <img src="/logo-black.svg" alt="Create a post" height="19" style={{ color: "#000", marginRight: "3px" }} />
       </Avatar>
       <Button
         variant="contained"

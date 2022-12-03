@@ -35,7 +35,7 @@ const PostsByFollowing = () => {
   return (
     <>
       <Box sx={{ px: { xxs: "17px", xs: "0px" } }}>
-        <Typography color="textSecondary" component="h2" variant="h6">
+        <Typography color="textSecondary" component="h2" variant="body1">
           Posts by those you follow
         </Typography>
       </Box>

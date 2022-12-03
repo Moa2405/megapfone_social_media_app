@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import useAxios from "../../hooks/useAxios";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Hidden, Stack, Typography } from "@mui/material";
 import { useAuth } from "../../context/authContext";
 import url from "../../common/url";
 import { useTheme } from "@mui/system";
@@ -11,6 +11,7 @@ import ProfileMedia from "../../components/profile/ProfileMedia";
 import ErrorAlert from "../../components/alert/ErrorAlert";
 import PostSkeleton from "../../components/post/posts/PostsSkeletons";
 import { usePostsContext } from "../../context/postContext";
+import PeopleToFollow from "../../components/peopleToFollow/PeopleToFollow";
 
 const MeProfile = () => {
 
@@ -69,6 +70,9 @@ const MeProfile = () => {
           </Stack>
           <EditProfile setProfileImages={setProfileImages} />
         </Stack>
+        <Hidden mdUp>
+          <PeopleToFollow />
+        </Hidden>
         <Box sx={{ mt: 4 }}>
           {isLoading && <PostSkeleton />}
           {isError && <ErrorAlert />}

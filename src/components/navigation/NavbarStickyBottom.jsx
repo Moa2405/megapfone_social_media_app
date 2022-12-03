@@ -29,7 +29,7 @@ const NavbarStickyBottom = () => {
   }
 
   return (
-    <Paper sx={{ display: { xs: "none" }, position: "fixed", bottom: "0", width: "100%", zIndex: "1000", padding: "17px 14px", }}>
+    <Paper sx={{ display: { xs: "none" }, position: "fixed", bottom: "0", width: "100%", zIndex: "1000", padding: "5px 14px", }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         {/* navigate home */}
         <NavLink to="/" style={{ textDecoration: "none", color: "inherit", backgroundColor: "inherit" }}>

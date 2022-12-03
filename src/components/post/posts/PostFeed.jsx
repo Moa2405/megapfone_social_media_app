@@ -5,6 +5,7 @@ import PostSkeleton from "./PostsSkeletons";
 import useAxios from "../../../hooks/useAxios"
 import InfiniteScroll from "react-infinite-scroller";
 import { useInfiniteQuery } from "react-query";
+import { Box, Typography } from "@mui/material";
 
 const PostFeed = () => {
 
@@ -33,6 +34,11 @@ const PostFeed = () => {
 
   return (
     <>
+      <Box sx={{ px: { xxs: "17px", xs: "0px" } }}>
+        <Typography color="textSecondary" component="h2" variant="h6">
+          Posts feed
+        </Typography>
+      </Box>
       <InfiniteScroll hasMore={hasNextPage} loadMore={fetchNextPage}>
         {data.pages.map((page, index) =>
           <Posts key={index} posts={page.results.data} />

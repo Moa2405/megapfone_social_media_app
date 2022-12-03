@@ -37,7 +37,6 @@ const UsersProfile = () => {
   const handelSetFollowing = () => {
     const isFollowing = user.following.find(following => following.name === userProfile.name);
     isFollowing === undefined ? setIsFollowing(false) : setIsFollowing(true);
-    console.log(isFollowing);
   }
 
   useEffect(() => {

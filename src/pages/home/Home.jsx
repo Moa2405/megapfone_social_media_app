@@ -1,4 +1,4 @@
-import { Box, Hidden, Typography } from "@mui/material";
+import { Box, Divider, Hidden, Typography } from "@mui/material";
 import PostsByFollowing from "../../components/post/posts/PostsByFollowing";
 import PostFeed from "../../components/post/posts/PostFeed";
 import { Stack } from "@mui/system";
@@ -20,12 +20,8 @@ const Home = () => {
         <Stack>
           <PostsByFollowing />
         </Stack>
+        <Divider />
         <Stack>
-          <Box sx={{ px: { xxs: "17px", xs: "0px" } }}>
-            <Typography color="textSecondary" component="h2" variant="h6">
-              Posts feed
-            </Typography>
-          </Box>
           <PostFeed />
         </Stack>
       </Stack>

@@ -141,7 +141,7 @@ const PeopleToFollow = () => {
                         <Avatar src={profile.avatar} sx={{ height: 48, width: 48 }} />
                       }
                       <Box width="100%">
-                        <Typography noWrap={true} align="center">
+                        <Typography noWrap={true} variant="body2" align="center">
                           {profile.name}
                         </Typography>
                       </Box>
@@ -149,7 +149,7 @@ const PeopleToFollow = () => {
                   </Link>
                   <Button
                     onClick={() => { handleFollow(profile) }}
-                    variant="outlined"
+                    variant="text"
                     color={theme.palette.mode === "dark" ? "secondary" : "secondaryLightTheme"}
                     size="small"
                   >
