@@ -2,7 +2,7 @@
 
 This project is a social media app bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Live Demo
+### Live Demo
 
 [Live Demo Link](https://megaphone-social-app.netlify.app/)
 
