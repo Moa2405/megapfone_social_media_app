@@ -290,14 +290,14 @@ const CreatePost = () => {
                 <Button
                   onClick={handleAddTagToArray}
                   variant="contained"
-                  style={{ height: "39px" }}
+                  style={{ marginTop: "10px" }}
                   disableElevation
                   sx={{
+                    height: "39px",
                     backgroundColor: theme.palette.mode === "light" ?
                       theme.palette.grey[300] :
                       theme.palette.grey[800],
                     color: theme.palette.mode === "light" ? "black" : "white",
-                    marginTop: "0.5rem"
                   }}
                 >
                   <AddIcon fontSize="small" />

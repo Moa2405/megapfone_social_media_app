@@ -36,7 +36,9 @@ const Comments = () => {
 
   return (
     <Stack spacing={3} pt={5}>
-      <Typography variant="h5" component="h2">Comments</Typography>
+      <Box sx={{ px: { xxs: "17px", xs: "0px" } }}>
+        <Typography variant="h5" component="h2">Comments</Typography>
+      </Box>
       <TransitionGroup>
         {commentsState && commentsState.map(comment => (
           <Collapse key={comment.id} timeout={500}>

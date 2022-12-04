@@ -39,13 +39,8 @@ const Comment = ({ postId }) => {
   }
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-      }}
-    >
-      <Box
-      >
+    <Box sx={{ width: "100%" }}>
+      <Box>
         <TextField
           id="input-with-icon-textfield"
           label="Comment..."
