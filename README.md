@@ -2,22 +2,37 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+This project is a social media app that allows users to post interesting events that happened in their lives.
+
+### The apps features include:
+
+A user with a `stud.noroff.no` email may register
+A registered user may login
+A registered user may update their avatar and banner
+A registered user may logout
+A registered user may view a list of `Posts`
+A registered user may view a list of `Profiles`
+A registered user may view a single `Post` by `id`
+A registered user may view a single `Profile` by `name`
+A registered user may create a `Post`
+A registered user may update a `Post` they own
+A registered user may delete a `Post` they own
+A registered user may create a `Comment` on any `Post`
+A registered user may `react` to any `Post` with an emoji
+A registered user may `follow` and `unfollow` another `Profile`
+
+
 ## Available Scripts
 
 In the project directory, you can run:
 
+### `npm install`
+
+Installs all the dependencies required for the project.
+
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
