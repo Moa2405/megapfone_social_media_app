@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "@mui/system";
 import { useAuth } from "../../context/authContext";
-import { Box, List, ListItemButton, ListItemIcon, ListItemText, Hidden, Menu, MenuItem, ListItem } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -11,6 +10,17 @@ import CreatePost from "../post/createPost/CreatePost";
 import { useThemeMode } from "../../context/themeContext"
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import Brightness2Icon from '@mui/icons-material/Brightness2';
+import {
+  Box,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Hidden,
+  Menu,
+  MenuItem,
+  ListItem
+} from "@mui/material";
 
 const LeftSidebar = () => {
 

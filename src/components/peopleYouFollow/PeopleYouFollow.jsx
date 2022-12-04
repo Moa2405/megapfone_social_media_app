@@ -1,8 +1,9 @@
-import { Avatar, Paper, Typography, Stack } from "@mui/material";
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import { stringAvatar } from "../../utils/avatarPlaceHolder";
+import { Avatar, Paper, Typography, Stack } from "@mui/material";
 
 const PeopleYouFollow = () => {
 
@@ -29,7 +30,7 @@ const PeopleYouFollow = () => {
 
   return (
     <>
-      <Paper width="100%" sx={{ p: 2, mb: 2 }}>
+      <Paper elevation={2} width="100%" sx={{ p: 2 }}>
         <Stack spacing={3}>
           <Typography color="textSecondary">
             People you follow
@@ -37,7 +38,6 @@ const PeopleYouFollow = () => {
           <Stack spacing={2}>
             {peopleYouFollow && peopleYouFollow.map((user, index) => (
               <Link key={index} to={`/user/${user.name}`} style={{ textDecoration: "none", color: "inherit" }}>
-                {/* <Paper elevation={2} sx={{ p: 1 }}> */}
                 <Stack direction="row" spacing={2} alignItems="center">
                   {user.avatar === null || user.avatar === "" ?
                     <Avatar {...stringAvatar} sx={{ height: 25, width: 25 }} /> :
@@ -46,7 +46,6 @@ const PeopleYouFollow = () => {
                     {user.name}
                   </Typography>
                 </Stack>
-                {/* </Paper> */}
               </Link>
             ))}
           </Stack>
@@ -54,6 +53,10 @@ const PeopleYouFollow = () => {
       </Paper>
     </>
   );
+}
+
+PeopleYouFollow.propTypes = {
+  peopleYouFollow: PropTypes.array
 }
 
 export default PeopleYouFollow;

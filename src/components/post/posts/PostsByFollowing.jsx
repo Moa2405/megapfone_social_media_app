@@ -1,10 +1,11 @@
-import { Box, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 import url from "../../../common/url";
-import PostSkeleton from "./PostsSkeletons";
-import Posts from "./Posts";
-import ErrorAlert from "../../alert/ErrorAlert";
 import useAxios from "../../../hooks/useAxios"
 import { useQuery } from 'react-query';
+import PostSkeleton from "./PostsSkeletons";
+import ErrorAlert from "../../alert/ErrorAlert";
+import Posts from "./Posts";
+import { Box, Typography } from "@mui/material";
 
 const PostsByFollowing = () => {
 
@@ -42,6 +43,14 @@ const PostsByFollowing = () => {
       <Posts posts={data} />
     </>
   );
+}
+
+PostsByFollowing.propTypes = {
+  posts: PropTypes.array,
+  setPosts: PropTypes.func,
+  data: PropTypes.array,
+  isError: PropTypes.bool,
+  isLoading: PropTypes.bool
 }
 
 export default PostsByFollowing;

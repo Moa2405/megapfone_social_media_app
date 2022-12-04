@@ -1,4 +1,5 @@
 import { Box, Divider, Hidden, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 import PostsByFollowing from "../../components/post/posts/PostsByFollowing";
 import PostFeed from "../../components/post/posts/PostFeed";
 import { Stack } from "@mui/system";
@@ -28,5 +29,13 @@ const Home = () => {
     </>
   );
 }
+
+Home.propTypes = {
+  posts: PropTypes.array,
+  setPosts: PropTypes.func,
+  data: PropTypes.array,
+  isError: PropTypes.bool,
+  isLoading: PropTypes.bool
+};
 
 export default Home;

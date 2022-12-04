@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 
 //displaying random background color on avatar if no image is provided
 const stringToColor = (string) => {
@@ -55,3 +56,14 @@ export const stringAvatar = (name) => {
     };
   }
 }
+
+stringAvatar.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+stringToColor.propTypes = {
+  string: PropTypes.string.isRequired,
+};
+
+
+

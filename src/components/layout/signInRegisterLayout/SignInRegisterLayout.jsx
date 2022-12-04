@@ -17,12 +17,13 @@ const SignInRegisterLayout = () => {
     //with the image social-media-welcome.jpg on the left and the form on the right
     <Container maxWidth="lg">
       <Stack
+        py={6}
         width="100%"
         spacing={4}
         direction="row"
         justifyContent="center"
         alignItems="center"
-        height="100vh"
+        minHeight="100vh"
       >
         <Box
           sx={{

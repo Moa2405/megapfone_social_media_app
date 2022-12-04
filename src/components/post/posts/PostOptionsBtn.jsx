@@ -1,8 +1,8 @@
+import PropTypes from "prop-types";
 import { useState } from 'react';
 import { useTheme } from "@mui/system";
 import { useAuth } from '../../../context/authContext'
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
+import { IconButton, Menu } from '@mui/material/';
 import MoreHoriz from '@mui/icons-material/MoreHoriz';
 import Follow from '../../profile/FollowOnPost';
 import UnFollow from '../../profile/UnFollowOnPost';
@@ -98,6 +98,10 @@ const PostOptionBtn = ({ post }) => {
       </Menu>
     </div>
   );
+}
+
+PostOptionBtn.propTypes = {
+  post: PropTypes.object.isRequired,
 }
 
 export default PostOptionBtn;

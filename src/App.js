@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { AuthProvider } from "./context/authContext";
 import Layout from './components/layout/mainLayout/MainLayout';
 import Home from './pages/home/Home';
@@ -47,5 +48,10 @@ const App = () => {
     </AuthProvider>
   );
 }
+
+App.propTypes = {
+  children: PropTypes.node,
+};
+
 
 export default App;

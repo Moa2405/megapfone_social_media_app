@@ -1,7 +1,5 @@
 export const light = {
-
   breakpoints: {
-
     values: {
       xxs: 0,
       xs: 500,

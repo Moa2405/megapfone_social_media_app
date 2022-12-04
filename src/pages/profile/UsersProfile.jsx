@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useQuery } from "react-query";
 import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 import { useAuth } from "../../context/authContext";
@@ -126,4 +127,17 @@ const UsersProfile = () => {
 
 }
 
+UsersProfile.propTypes = {
+  name: PropTypes.string,
+  handelSetFollowing: PropTypes.func,
+  handleUpdateFollowing: PropTypes.func,
+  isFollowing: PropTypes.bool,
+  profileMedia: PropTypes.object,
+  userProfile: PropTypes.object,
+
+};
+
 export default UsersProfile;
+
+
+

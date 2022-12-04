@@ -1,8 +1,8 @@
-import { Avatar, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/system";
 import { formatDistance } from "../../../utils/formatData";
 import { stringAvatar } from "../../../utils/avatarPlaceHolder";
+import { Avatar, Stack, Typography } from "@mui/material";
 
 const PostAuthor = ({ author, created }) => {
 

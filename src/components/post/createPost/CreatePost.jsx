@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState, useRef, useEffect } from "react";
 import { useTheme } from "@emotion/react";
 import { Controller, useForm } from "react-hook-form"
@@ -335,5 +336,11 @@ const CreatePost = () => {
     </>
   );
 }
+
+CreatePost.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.string,
+};
+
 
 export default CreatePost;

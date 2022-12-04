@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
 
-export const useAxiosHook = (axiosParams) => {
+export const useAxiosHook = () => {
   const { user } = useAuth();
 
   axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
@@ -47,3 +48,8 @@ export const useAxiosHook = (axiosParams) => {
 
   return { response, error, loading, cancel, fetchData };
 };
+
+useAxiosHook.propTypes = {
+  children: PropTypes.node,
+};
+

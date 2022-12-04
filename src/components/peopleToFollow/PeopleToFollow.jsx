@@ -1,15 +1,15 @@
 import useAxios from "../../hooks/useAxios";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "react-query";
 import { useAuth } from "../../context/authContext";
 import { useTheme } from "@mui/system";
 import url from "../../common/url";
-import { useEffect, useState } from "react";
-import { Avatar, Box, Button, CircularProgress, Hidden, Paper, Typography } from "@mui/material";
 import ErrorAlert from "../alert/ErrorAlert";
-import { Stack } from "@mui/system";
 import { Link } from "react-router-dom";
 import { stringAvatar } from "../../utils/avatarPlaceHolder";
 import { useSnackBar } from "../../context/snackBarContext";
+import { Avatar, Stack, Box, Button, CircularProgress, Hidden, Paper, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 
 const PeopleToFollow = () => {
 
@@ -93,7 +93,7 @@ const PeopleToFollow = () => {
   return (
     <>
       <Hidden mdDown>
-        <Paper width="100%" sx={{ p: 2, mb: 2 }}>
+        <Paper elevation={2} width="100%" sx={{ p: 2 }}>
           <Stack spacing={3}>
             <Typography color="textSecondary">
               People to follow
@@ -164,5 +164,21 @@ const PeopleToFollow = () => {
     </>
   );
 }
+
+PeopleToFollow.propTypes = {
+  profiles: PropTypes.array,
+  profilesToFollow: PropTypes.array,
+  user: PropTypes.object,
+  updateUser: PropTypes.func,
+  axios: PropTypes.object,
+  theme: PropTypes.object,
+  activateSnackBar: PropTypes.func,
+  isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
+  fetchPeopleToFollow: PropTypes.func,
+  mutation: PropTypes.object,
+  setProfiles: PropTypes.func,
+  setProfilesToFollow: PropTypes.func,
+};
 
 export default PeopleToFollow;

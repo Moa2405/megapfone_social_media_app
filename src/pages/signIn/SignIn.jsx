@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import PropTypes from "prop-types";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -43,7 +44,6 @@ const SignIn = () => {
   }
 
   const onSubmit = async (data) => {
-
     fetchData({
       method: "post",
       url: url.auth.login,
@@ -130,4 +130,17 @@ const SignIn = () => {
   );
 }
 
+SignIn.propTypes = {
+  history: PropTypes.object,
+  handleAddFollowingAndFollowers: PropTypes.func,
+  onSubmit: PropTypes.func,
+  loading: PropTypes.bool,
+  error: PropTypes.array,
+  response: PropTypes.object,
+};
+
 export default SignIn;
+
+
+
+

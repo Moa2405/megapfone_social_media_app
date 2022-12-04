@@ -1,3 +1,4 @@
+
 const url = {
   auth: {
     login: "/api/v1/social/auth/login",
@@ -26,7 +27,7 @@ const url = {
     follow: (name) => `/api/v1/social/profiles/${name}/follow`,
     unFollow: (name) => `/api/v1/social/profiles/${name}/unfollow`
   }
-}
+};
 
 export default url;
 

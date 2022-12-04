@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { Box, InputAdornment, TextField } from "@mui/material";
 import url from "../../../common/url";
 import { LoadingButton } from "@mui/lab";
@@ -76,6 +77,10 @@ const Comment = ({ postId }) => {
       </Box>
     </Box>
   );
+}
+
+Comment.propTypes = {
+  postId: PropTypes.number
 }
 
 export default Comment;

@@ -1,14 +1,28 @@
-import { TextField, InputAdornment, Modal, Paper, IconButton, Typography, Stack, Button, Box, Avatar, CircularProgress, Hidden } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
-import { useTheme } from "@mui/system";
 import useAxios from "../../hooks/useAxios";
+import PropTypes from "prop-types";
 import { useMutation } from "react-query";
-import url from "../../common/url";
+import { useTheme } from "@mui/system";
 import { useState, useRef } from "react";
+import url from "../../common/url";
 import { stringAvatar } from "../../utils/avatarPlaceHolder";
+import SearchIcon from '@mui/icons-material/Search';
 import { Link } from "react-router-dom";
 import ErrorAlert from "../alert/ErrorAlert";
+import CloseIcon from '@mui/icons-material/Close';
+import {
+  TextField,
+  InputAdornment,
+  Modal,
+  Paper,
+  IconButton,
+  Typography,
+  Stack,
+  Button,
+  Box,
+  Avatar,
+  CircularProgress,
+  Hidden
+} from "@mui/material";
 
 const SearchBar = () => {
 
@@ -147,5 +161,9 @@ const SearchBar = () => {
     </>
   );
 }
+
+SearchBar.propTypes = {
+  search: PropTypes.func
+};
 
 export default SearchBar;

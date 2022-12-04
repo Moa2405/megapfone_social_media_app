@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Alert, Snackbar } from "@mui/material";
 import React, { createContext, useContext, useMemo, useState } from "react";
 
@@ -54,4 +55,11 @@ export const SnackBarProvider = ({ children }) => {
 
 export const useSnackBar = () => {
   return useContext(SnackBarContext);
+};
+
+SnackBarProvider.propTypes = {
+  children: PropTypes.node,
+  snackBar: PropTypes.object,
+  activateSnackBar: PropTypes.func,
+  onClose: PropTypes.func,
 };

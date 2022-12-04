@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { useQuery } from "react-query";
 import useAxios from "../../hooks/useAxios";
 import { Box, Hidden, Stack, Typography } from "@mui/material";
@@ -13,7 +14,7 @@ import PostSkeleton from "../../components/post/posts/PostsSkeletons";
 import { usePostsContext } from "../../context/postContext";
 import PeopleToFollow from "../../components/peopleToFollow/PeopleToFollow";
 
-const MeProfile = () => {
+const MyProfile = () => {
 
   const axios = useAxios();
   const { postsInContext, setInitialPosts } = usePostsContext()
@@ -84,4 +85,13 @@ const MeProfile = () => {
 
 }
 
-export default MeProfile;
+MyProfile.propTypes = {
+  posts: PropTypes.array,
+  setPosts: PropTypes.func,
+  data: PropTypes.array,
+  isError: PropTypes.bool,
+  isLoading: PropTypes.bool
+};
+
+export default MyProfile;
+

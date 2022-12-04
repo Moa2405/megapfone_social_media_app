@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useAxiosHook } from "../../hooks/useAxiosHook";
 import { Box, TextField, Alert, Typography, Divider, Stack } from "@mui/material"
@@ -10,6 +11,7 @@ import url from '../../common/url';
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/system";
 import Logo from "../../components/Logo"
+import ErrorAlert from "../../components/alert/ErrorAlert";
 
 const schema = yup.object().shape({
   name: yup.string().required("This field is required").matches(/^[a-zA-Z0-9_ ]+$/, "The name value must not contain punctuation symbols apart from underscore (_)"),
@@ -47,6 +49,32 @@ const Register = () => {
   }, [response, redirect]);
 
   const errContrastText = theme.palette.mode === "dark" ? theme.palette.error.contrastText : theme.palette.error.main;
+
+  const ErrorUiResponse = () => {
+    if (error) {
+      if (error[0].message === "Profile already exists") {
+        return (
+          <Alert severity="error">
+            <Stack direction="row" spacing={2}>
+              <Typography variant="body2" color={errContrastText}>
+                {error[0].message}
+              </Typography>
+              <Link to="/signIn">
+                <Typography variant="body2" color={errContrastText}>
+                  Sign in
+                </Typography>
+              </Link>
+            </Stack>
+          </Alert>
+        );
+      } else {
+        return <ErrorAlert />;
+      }
+    }
+
+    return null;
+  }
+
 
   return (
     <Box
@@ -111,20 +139,7 @@ const Register = () => {
         <LoadingButton type="submit" loading={loading} variant="contained" color="primary">
           Register
         </LoadingButton>
-        {error && error[0].message === "Profile already exists" && (
-          <Alert severity="error">
-            <Stack direction="row" spacing={2}>
-              <Typography variant="body2" color={errContrastText}>
-                {error[0].message}
-              </Typography>
-              <Link to="/signIn">
-                <Typography variant="body2" color={errContrastText}>
-                  Sign in
-                </Typography>
-              </Link>
-            </Stack>
-          </Alert>)
-        }
+        <ErrorUiResponse />
         <Divider>Or</Divider>
         <Stack direction="row" justifyContent="center" spacing={1}>
           <Typography variant="body2">
@@ -141,4 +156,19 @@ const Register = () => {
   );
 }
 
+Register.propTypes = {
+  response: PropTypes.object,
+  error: PropTypes.array,
+  loading: PropTypes.bool,
+  fetchData: PropTypes.func,
+  control: PropTypes.object,
+  handleSubmit: PropTypes.func,
+  errors: PropTypes.object,
+  redirect: PropTypes.func,
+  theme: PropTypes.object,
+  onSubmit: PropTypes.func,
+  isMounted: PropTypes.bool,
+};
+
 export default Register;
+

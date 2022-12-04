@@ -1,13 +1,12 @@
-import { Paper, Typography, Stack, Collapse } from "@mui/material";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import PostAuthor from "./PostAuthor";
+import { TransitionGroup } from 'react-transition-group';
 import ReactToPost from "./ReactToPost";
 import Comment from "./Comment";
-import { Box } from "@mui/system";
-import Tags from "./Tags";
 import PostMedia from "./PostMedia";
 import PostOptionBtn from "./PostOptionsBtn";
-import { TransitionGroup } from 'react-transition-group';
-import { Link } from "react-router-dom";
+import { Paper, Typography, Stack, Collapse, Box } from "@mui/material";
 
 const Posts = ({ posts }) => {
 
@@ -50,8 +49,6 @@ const Posts = ({ posts }) => {
                       </Box>
                     </Stack>
                   </Link>
-                  {/* post tags */}
-                  <Tags tags={post.tags} />
                 </Stack>
                 {/* post media */}
                 <PostMedia media={post.media} />
@@ -64,6 +61,10 @@ const Posts = ({ posts }) => {
       </Box>
     </>
   );
+}
+
+Posts.propTypes = {
+  posts: PropTypes.array.isRequired,
 }
 
 export default Posts;

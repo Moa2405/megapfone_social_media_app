@@ -1,10 +1,11 @@
+import PropTypes from "prop-types";
 import url from "../../../common/url";
-import ErrorAlert from "../../alert/ErrorAlert";
-import Posts from "./Posts";
-import PostSkeleton from "./PostsSkeletons";
 import useAxios from "../../../hooks/useAxios"
+import ErrorAlert from "../../alert/ErrorAlert";
 import InfiniteScroll from "react-infinite-scroller";
+import Posts from "./Posts";
 import { useInfiniteQuery } from "react-query";
+import PostSkeleton from "./PostsSkeletons";
 import { Box, Typography } from "@mui/material";
 
 const PostFeed = () => {
@@ -46,8 +47,16 @@ const PostFeed = () => {
       </InfiniteScroll>
     </>
   );
-
 }
+
+PostFeed.propTypes = {
+  posts: PropTypes.array,
+  setPosts: PropTypes.func,
+  data: PropTypes.array,
+  isError: PropTypes.bool,
+  isLoading: PropTypes.bool
+};
+
 
 export default PostFeed
 

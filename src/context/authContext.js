@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import useLocalStorage from "../hooks/useLocaleStorage";
 
 const AuthContext = createContext();
@@ -43,4 +44,11 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => {
     return useContext(AuthContext);
+};
+
+AuthProvider.propTypes = {
+    children: PropTypes.node,
+    updateUser: PropTypes.func,
+    login: PropTypes.func,
+    logout: PropTypes.func
 };

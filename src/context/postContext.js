@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
+import PropTypes from "prop-types";
 
 const PostsContext = createContext();
 
@@ -44,4 +45,13 @@ export const PostsProvider = ({ children }) => {
 
 export const usePostsContext = () => {
   return useContext(PostsContext);
+};
+
+PostsProvider.propTypes = {
+  children: PropTypes.node,
+  postsInContext: PropTypes.array,
+  setInitialPosts: PropTypes.func,
+  deletePost: PropTypes.func,
+  updatePost: PropTypes.func,
+  addPost: PropTypes.func,
 };

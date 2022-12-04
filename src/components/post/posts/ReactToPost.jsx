@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import EmojiPicker from 'emoji-picker-react';
 import { useState } from 'react';
 import useAxios from '../../../hooks/useAxios';
@@ -99,5 +100,24 @@ const ReactToPost = ({ postId, reactions }) => {
     </>
   );
 }
+
+ReactToPost.propTypes = {
+  postId: PropTypes.number,
+  reactions: PropTypes.array,
+  handleReactOnPicker: PropTypes.func,
+  handleReactOnChip: PropTypes.func,
+  handleClick: PropTypes.func,
+  open: PropTypes.bool,
+  id: PropTypes.string,
+  anchorEl: PropTypes.object,
+  setAnchorEl: PropTypes.func,
+  setReactionsArray: PropTypes.func,
+  reactionsArray: PropTypes.array,
+  mutationOnChipClick: PropTypes.object,
+  mutationOnEmojiPicker: PropTypes.object,
+  activateSnackBar: PropTypes.func,
+  theme: PropTypes.object,
+  axios: PropTypes.object,
+};
 
 export default ReactToPost;

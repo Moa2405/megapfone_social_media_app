@@ -1,4 +1,5 @@
 import axios from "axios";
+import PropTypes from "prop-types";
 import { useAuth } from "../context/authContext";
 
 const useAxios = () => {
@@ -17,6 +18,10 @@ const useAxios = () => {
 
     return apiClient;
 }
+
+useAxios.propTypes = {
+    children: PropTypes.node,
+};
 
 export default useAxios;
 

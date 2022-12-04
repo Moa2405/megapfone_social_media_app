@@ -5,13 +5,14 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import CreatePost from "../post/createPost/CreatePost";
 import SettingsIcon from '@mui/icons-material/Settings';
-import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Paper, Stack } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useTheme } from "@mui/system";
 import LogoutIcon from '@mui/icons-material/Logout';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import Brightness2Icon from '@mui/icons-material/Brightness2';
 import SearchBar from "../searchBar/SearchBar";
+import PropTypes from "prop-types";
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Paper, Stack } from '@mui/material';
 
 const NavbarStickyBottom = () => {
 
@@ -101,6 +102,10 @@ const NavbarStickyBottom = () => {
       </Stack>
     </Paper>
   );
+}
+
+NavbarStickyBottom.propTypes = {
+  createPost: PropTypes.bool,
 }
 
 export default NavbarStickyBottom;

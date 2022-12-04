@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { CircularProgress, ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { useAxiosHook } from "../../../hooks/useAxiosHook";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
@@ -49,5 +50,11 @@ const DeletePost = ({ post, closeMenu }) => {
     </>
   );
 }
+
+DeletePost.propTypes = {
+  post: PropTypes.object.isRequired,
+  closeMenu: PropTypes.func.isRequired,
+};
+
 
 export default DeletePost;

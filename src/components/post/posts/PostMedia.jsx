@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Box } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -20,5 +21,9 @@ const PostMedia = ({ media }) => {
     return
   }
 }
+
+PostMedia.propTypes = {
+  media: PropTypes.string,
+};
 
 export default PostMedia;

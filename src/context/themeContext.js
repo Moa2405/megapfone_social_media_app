@@ -1,4 +1,5 @@
 import { useMediaQuery } from '@mui/material';
+import PropTypes from 'prop-types';
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import useLocalStorage from "../hooks/useLocaleStorage";
 
@@ -56,3 +57,8 @@ export const useThemeMode = () => {
   return useContext(ThemeContext);
 }
 
+ThemeContextProvider.propTypes = {
+  children: PropTypes.node,
+  darkMode: PropTypes.bool,
+  handleMode: PropTypes.func,
+};

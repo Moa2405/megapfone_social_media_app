@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState, useRef, useEffect } from "react";
 import { useTheme } from "@emotion/react";
 import { Controller, useForm } from "react-hook-form";
@@ -295,5 +296,11 @@ const EditPost = ({ post, closeMenu }) => {
     </>
   );
 }
+
+EditPost.propTypes = {
+  post: PropTypes.object.isRequired,
+  closeMenu: PropTypes.func.isRequired,
+};
+
 
 export default EditPost;

@@ -6,7 +6,13 @@ import PeopleToFollow from "../../../peopleToFollow/PeopleToFollow";
 
 const RightSidebar = () => {
   return (
-    <Box sx={{ position: "fixed", width: { md: "232px", lg: "286px" }, top: "2rem", display: { xxs: "none", md: "block" } }}>
+    <Box sx={{
+      position: "fixed",
+      width: { md: "232px", lg: "286px" },
+      top: "2rem",
+      display: { xxs: "none", md: "block" }
+    }}
+    >
       <Stack spacing={1}>
         <SearchBar />
         <PeopleYouFollow />
