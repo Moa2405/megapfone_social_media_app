@@ -1,8 +1,10 @@
 # Social Media app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a social media app bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This project is a social media app that allows users to post interesting events that happened in their lives.
+## Live Demo
+
+[Live Demo Link](https://megaphone-social-app.netlify.app/)
 
 ### The apps features include:
 
@@ -20,7 +22,6 @@ This project is a social media app that allows users to post interesting events 
 12. A registered user may create a `Comment` on any `Post`
 13. A registered user may `react` to any `Post` with an emoji
 14. A registered user may `follow` and `unfollow` another `Profile`
-
 
 ## Available Scripts
 
