@@ -4,7 +4,7 @@ This project is a social media app bootstrapped with [Create React App](https://
 
 ### Live Demo
 
-[Live Demo Link](https://megaphone-social-app.netlify.app/)
+[Live Demo Link](https://gleaming-macaron-b7c398.netlify.app/)
 
 ### The apps features include:
 
